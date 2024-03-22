@@ -1,0 +1,14 @@
+{
+  "codename": "Timefont",
+  "ttf_path": "/assets/calibrib.ttf",
+  "bin_path": "/assets\\ui_font_Timefont.bin",
+  "c_path": "/assets\\ui_font_Timefont.c",
+  "cfg_path": "/assets\\ui_font_Timefont.fcfg",
+  "size": 80,
+  "bpp": 2,
+  "letters": 0,
+  "ranges": [],
+  "symbols": "0123456789:",
+  "customparams": "--no-compress --no-prefilter",
+  "uploaded": false
+}

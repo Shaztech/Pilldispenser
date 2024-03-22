@@ -1,0 +1,14 @@
+{
+  "codename": "Datefont",
+  "ttf_path": "/assets/calibrib.ttf",
+  "bin_path": "/assets\\ui_font_Datefont.bin",
+  "c_path": "/assets\\ui_font_Datefont.c",
+  "cfg_path": "/assets\\ui_font_Datefont.fcfg",
+  "size": 38,
+  "bpp": 1,
+  "letters": 0,
+  "ranges": [],
+  "symbols": "0123456789-",
+  "customparams": "--no-compress --no-prefilter",
+  "uploaded": false
+}
