@@ -1,0 +1,36 @@
+<html>
+<head>
+	<title>Pill Dispenser Configuration Portal</title>
+</head>
+<body>
+<h2 id="countdown">Settings saved, please wait 15 sec. for the device to reboot !</h2>
+<p>(you will be automaticaly redirected after the countdown)<br /></p>
+<p><br /></p>
+<p><a href="/" target="_self">Return to setting page</a><br /></p>
+
+<hr />
+<p><span style="font-size:11px;">Copyright 2024 &copy; <a href="https://github.com/Shaztech/Pilldispenser" target="_blank">Shaztech.Info</a></span></p>
+</body>
+    <script>
+        // Set the countdown time in seconds
+        var countdown = 15;
+
+        // Update the countdown every 1 second
+        var x = setInterval(function() {
+
+            // Display the countdown in an element with id="countdown"
+            document.getElementById("countdown").innerHTML = "Settings saved, please wait " + countdown + " sec. for the device to reboot !";
+
+            // Decrease the countdown by 1
+            countdown--;
+
+            // When the countdown reaches 0
+            if (countdown < 0) {
+                // Stop the interval
+                clearInterval(x);
+                // Redirect to the main page
+                window.location.href = "/";
+            }
+        }, 1000);
+    </script>
+</html>

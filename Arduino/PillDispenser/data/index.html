@@ -1,0 +1,163 @@
+<html>
+<head>
+	<title>Pill Dispenser Configuration Portal</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html {font-family: Arial; display: inline-block; text-align: center;}
+    h2 {font-size: 1.5rem;}
+    p {font-size: 0.75rem;}
+    body {max-width: 600px; margin:0px auto; padding-bottom: 25px;}
+    .switch {position: relative; display: inline-block; width: 46px; height: 26px} 
+    .switch input {display: none}
+    .slider {position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 34px}
+    .slider:before {position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: #fff; -webkit-transition: .4s; transition: .4s; border-radius: 68px}
+    input:checked+.slider {background-color: #2196F3}
+    input:checked+.slider:before {-webkit-transform: translateX(20px); -ms-transform: translateX(20px); transform: translateX(20px)}
+    .button {background-color: #2196F3; border: none; color: white; padding: 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; border-radius: 12px;}
+
+  </style>
+	
+</head>
+<body>
+<p><br /></p>
+<h1>Pill Dispenser Configuration Portal</h1>
+<hr>
+<h3>- Trays Settings -</h3>
+<form action="/save">
+<table align="center" border="0" cellpadding="4" cellspacing="2" style="width:125;">
+	<tbody>
+		<tr>
+			<td style="text-align: center;"><strong>Tray number</strong></td>
+			<td style="text-align: center;"><strong>Description</strong></td>
+			<td style="text-align: center;"><strong>Auto. Alert</strong></td>
+			<td style="text-align: center;"><strong>Time</strong></td>
+			<td style="text-align: center;"><strong>User Color</strong></td>
+		</tr>
+		<tr>
+			<td>#1<span style="font-size: 12px;"></span></td>
+			<td>%TXTDESC1%<span style="font-size: 12px;"></span></td>
+			<td> %BTNENA1% </td>
+			<td>%TIMEBOX1%</td>
+			<td>%COLORBOX1%</td>
+		</tr>
+		<tr>
+			<td>#2<span style="font-size: 12px;"></span></td>
+			<td>%TXTDESC2%<span style="font-size: 12px;"></span></td>
+			<td> %BTNENA2% </td>
+			<td>%TIMEBOX2%</td>
+			<td>%COLORBOX2%</td>
+		</tr>
+		<tr>
+			<td>#3<span style="font-size: 12px;"></span></td>
+			<td>%TXTDESC3%<span style="font-size: 12px;"></span></td>
+			<td> %BTNENA3% </td>
+			<td>%TIMEBOX3%</td>
+			<td>%COLORBOX3%</td>
+		</tr>
+		<tr>
+			<td>#4<span style="font-size: 12px;"></span></td>
+			<td>%TXTDESC4%<span style="font-size: 12px;"></span></td>
+			<td> %BTNENA4% </td>
+			<td>%TIMEBOX4%</td>
+			<td>%COLORBOX4%</td>
+		</tr>
+		<tr>
+			<td>#5<span style="font-size: 12px;"></span></td>
+			<td>%TXTDESC5%<span style="font-size: 12px;"></span></td>
+			<td> %BTNENA5% </td>
+			<td>%TIMEBOX5%</td>
+			<td>%COLORBOX5%</td>
+		</tr>
+		<tr>
+			<td>#6<span style="font-size: 12px;"></span></td>
+			<td>%TXTDESC6%<span style="font-size: 12px;"></span></td>
+			<td> %BTNENA6% </td>
+			<td>%TIMEBOX6%</td>
+			<td>%COLORBOX6%</td>
+		</tr>
+		<tr>
+			<td>#7<span style="font-size: 12px;"></span></td>
+			<td>%TXTDESC7%<span style="font-size: 12px;"></span></td>
+			<td> %BTNENA7% </td>
+			<td>%TIMEBOX7%</td>
+			<td>%COLORBOX7%</td>
+		</tr>
+		<tr>
+			<td>#8<span style="font-size: 12px;"></span></td>
+			<td>%TXTDESC8%<span style="font-size: 12px;"></span></td>
+			<td> %BTNENA8% </td>
+			<td>%TIMEBOX8%</td>
+			<td>%COLORBOX8%</td>
+		</tr>
+		<tr>
+			<td>#9<span style="font-size: 12px;"></span></td>
+			<td>%TXTDESC9%<span style="font-size: 12px;"></span></td>
+			<td> %BTNENA9% </td>
+			<td>%TIMEBOX9%</td>
+			<td>%COLORBOX9%</td>
+		</tr>
+		<tr>
+			<td>#10<span style="font-size: 12px;"></span></td>
+			<td>%TXTDESC10%<span style="font-size: 12px;"></span></td>
+			<td> %BTNENA10% </td>
+			<td>%TIMEBOX10%</td>
+			<td>%COLORBOX10%</td>
+		</tr>
+	</tbody>
+</table>
+	<p>(minutes will be converted to 5 mins intervals)</p>
+<hr>
+<h3>- System Settings -</h3>
+<table align="center" border="0" cellpadding="3" cellspacing="4" style="width:400px;">
+	<tbody>
+		<tr>
+			<td style="text-align: center;"><span style="font-size: 12px;">Trays installed:</span></td>
+			<td>%TRAYINSTBOX%</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;"><span style="font-size: 12px;">Clock Screensaver:</span></td>
+			<td>%CLOCKSCRENA%</span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center;"><span style="font-size: 12px;">Speaker Volume:</span></td>
+			<td>%SPKVOL%</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;"><span style="font-size: 12px;">Mute Sounds:</span></td>
+			<td>%MUTEENA%</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;"><span style="font-size: 12px;">Enable DST:</span></td>
+			<td>%DSTENA%</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;"><span style="font-size: 12px;">UTC Offset:</span></td>
+			<td>%UTCOFFSETBOX%</td>
+		</tr>
+	</tbody>
+</table>
+<a href="/save"><button class="button">Save changes</button></a>
+<p>(Save changes will reboot the device.)</p>
+</form> 
+<a href="/reset"><button class="button">Factory reset</button></a>
+<p>(After a factory reset you will need to re-enter your wifi configurations directly on the device.)</p>
+<hr>
+<h3>- Informations -</h3>
+<p style="line-height:2">IP adress: <strong> %IP%</strong><br />
+Current AP: <strong> %AP%</strong><br />
+Signal Level: <strong> %DB% dbm</strong><br />
+OTA Update: <a href="/update" target="_blank">Update Page</a><br/>
+&nbsp;</p>
+<hr>
+<p><span style="font-size:11px;">Copyright 2024 &copy; <a href="https://github.com/Shaztech/Pilldispenser" target="_blank">Shaztech.Info</a></span></p>
+
+<script>function toggleCheckbox(element) {
+  var xhr = new XMLHttpRequest();
+  if(element.checked){ xhr.open("GET", "/update?state=1", true); }
+  else { xhr.open("GET", "/update?state=0", true); }
+  xhr.send();
+}
+</script>
+
+</body>
+</html>
