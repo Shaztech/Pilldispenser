@@ -32,7 +32,8 @@ Just follow the guides in order to assemble it once you have all the parts.
 ## Part listing:
 (A## = Printed parts, B# = PCB, B#.# = PCB Parts, P# = Parts purchased, S# = Screws)
 
-### Printed parts (STL Files):
+### Printed parts (STL Files) [(complete profile in makerworld)](https://makerworld.com/en/models/389626):
+
 - A1 - Base Bottom [1x] (Printed with supports for the top of the lcd, the usb port and the base of the dispenser opening, 15% infill)
 - A1.1 - Base Washer Holder [3x optional] (no supports, 15% infill)
 - A2 - LCD Holder [1x] (buildplate supports, 50% infill)
@@ -116,8 +117,6 @@ the tray is fully align with a container in the ring. (Not half of 2 containers)
 The top dust cap have a hole to insert the stylus that usually come with the LCD module when you buy it.
 
 ## [Buy me a coffee](https://www.buymeacoffee.com/shaztech_info).
-
-
 
 
 
