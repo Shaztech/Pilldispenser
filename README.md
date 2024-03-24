@@ -28,6 +28,7 @@ Just follow the guides in order to assemble it once you have all the parts.
 
 ![Alt text](/Pictures/Screens.png?raw=true "Title")
 ![Alt text](/Pictures/TraywithPills.jpg?raw=true "Title")
+![Alt text](/Pictures/WebPortal.png?raw=true "Title")
 
 ## Part listing:
 (A## = Printed parts, B# = PCB, B#.# = PCB Parts, P# = Parts purchased, S# = Screws)
