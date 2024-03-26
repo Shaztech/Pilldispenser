@@ -7,6 +7,8 @@ Software are available in pre-compiled (bin files) for the ESP32, or all Arduino
 edit them. I've included all the library I used. The full LCD interface is in Squareline Studio.
 Just follow the guides in order to assemble it once you have all the parts.
 
+Please check the user manual for the usage of the device.
+
 ![Alt text](/Pictures/FinalView.jpg?raw=true "Title")
 
 ## Features:
