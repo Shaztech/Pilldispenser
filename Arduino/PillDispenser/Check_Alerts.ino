@@ -86,8 +86,6 @@ static void flashing_timer(lv_timer_t * timer) {
     }
   }
 
-  //// Adjustment here to break out when there's a fastflash
-
   for (int i = 1; i <= 10; i++) {
     if (!solidLED) {
       if (trayfastflash[i]) {
@@ -110,8 +108,6 @@ static void flashing_timer(lv_timer_t * timer) {
       showLED(currentpixelcolor);
     }
   }
-
-  ////////
 
   // Update flashing state
   flashing++;
@@ -155,6 +151,7 @@ void placethings() {
 }
 
 void showLED(uint32_t color) {
+  pixels.setPixelColor(0, color);
   pixels.setPixelColor(1, color);
   pixels.setBrightness(50);
   pixels.show();

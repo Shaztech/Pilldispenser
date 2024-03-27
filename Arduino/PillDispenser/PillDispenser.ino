@@ -199,6 +199,7 @@ void setup() {
   lv_label_set_text(ui_VersionLBL, showversion.c_str());
 
   lv_timer_t* timer = lv_timer_create(startup_step1_timer, 1000, NULL);
+  pixels.setPixelColor(0, pixels.Color(213, 230, 255));
   pixels.setPixelColor(1, pixels.Color(213, 230, 255));
   pixels.setBrightness(50);
   pixels.show();
