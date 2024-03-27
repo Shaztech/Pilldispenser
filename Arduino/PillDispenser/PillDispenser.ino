@@ -29,13 +29,10 @@
 #define LED_PIN    16  // Use GPIO16
 #define NUM_LEDS   2  // Number of LEDs in your strip
 
-//TX2 POUR AUDIO = PIN17
-
-
 // declaration
 String newHostname  = "PillsDisp";
-lv_timer_t* inactivity_timer = NULL; // Declare the timer pointer globally
-lv_timer_t* alertsound_timer = NULL; // Declare the timer pointer globally
+lv_timer_t* inactivity_timer = NULL;
+lv_timer_t* alertsound_timer = NULL;
 static const uint16_t screenWidth  = 320;
 static const uint16_t screenHeight = 240;
 static lv_disp_draw_buf_t draw_buf;
@@ -47,13 +44,19 @@ String trayNames[11] = {"", "", "", "", "", "", "", "", "", "", ""};
 bool trayAlertEna[11] = {false, false, false, false, false, false, false, false, false, false, false};
 bool traytriggered[11] = {false, false, false, false, false, false, false, false, false, false, false};
 bool trayEnabled[11] = {false, false, false, false, false, false, false, false, false, false, false};
-bool trayfastflash[11];
-int trayHours[11];
-int trayMin[11];
-int trayColor[11];
+bool traydisptoday[11] = {false, false, false, false, false, false, false, false, false, false, false};
+bool traydismtoday[11] = {false, false, false, false, false, false, false, false, false, false, false};
 bool alreadyTriggered[11] = {false};
 bool trayCheckedState[11] = {false}; // Initialize all as unchecked
+bool trayfastflash[11];
+bool solidLED;
+int trayHours[11];
+int trayMin[11];
+int resetHours;
+int resetMin;
+int trayColor[11];
 bool alertinprogress = false;
+bool dismissinprogress;
 bool dispensebatchinprogress;
 bool displacementinprogress;
 int currentcolordispense;
@@ -61,10 +64,12 @@ int flashing;
 uint32_t currentpixelcolor;
 lv_obj_t* ui_TrayIMG[11];
 lv_obj_t* ui_TrayLBL[11];
+lv_obj_t* ui_TrayCheckIMG[11];
 
 bool internetstatus;
 bool clockSS;
 bool muteSound;
+bool currentlyplaying;
 int installedTrays;
 bool dstEnabled;
 int utcOffset;
@@ -94,7 +99,7 @@ void setup() {
 
   String showversion = "LVGL v";
   showversion += String('.') + lv_version_major() + "." + lv_version_minor() + "." + lv_version_patch();
-  showversion += " - SOFT v.1.0"; // SOFTWARE VERSION DEFINITION
+  showversion += " - SOFT v.1.1"; // SOFTWARE VERSION DEFINITION
 
   Wire.begin(SDA_PIN, SCL_PIN);
   pwm.begin();
@@ -153,11 +158,26 @@ void setup() {
   ui_TrayLBL[9] = ui_TrayLBL9;
   ui_TrayLBL[10] = ui_TrayLBL10;
 
+  ui_TrayCheckIMG[1] = ui_TrayCheckIMG1;
+  ui_TrayCheckIMG[2] = ui_TrayCheckIMG2;
+  ui_TrayCheckIMG[3] = ui_TrayCheckIMG3;
+  ui_TrayCheckIMG[4] = ui_TrayCheckIMG4;
+  ui_TrayCheckIMG[5] = ui_TrayCheckIMG5;
+  ui_TrayCheckIMG[6] = ui_TrayCheckIMG6;
+  ui_TrayCheckIMG[7] = ui_TrayCheckIMG7;
+  ui_TrayCheckIMG[8] = ui_TrayCheckIMG8;
+  ui_TrayCheckIMG[9] = ui_TrayCheckIMG9;
+  ui_TrayCheckIMG[10] = ui_TrayCheckIMG10;
+
   lv_obj_add_event_cb(ui_ScanWifiBTN, scan_wifi_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_Keyboard, keyboard_wifi_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_SettingBackBTN, SettingBackBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_WifiClearBTN, WifiClearBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_DispenseBTN, DispenseBTN_event_handler, LV_EVENT_ALL, NULL);
+  lv_obj_add_event_cb(ui_TrueDismissBTN, TrueDismissBTN_event_handler, LV_EVENT_ALL, NULL);
+  lv_obj_add_event_cb(ui_DispenseAgainBTN, DispenseAgainBTN_event_handler, LV_EVENT_ALL, NULL);
+  lv_obj_add_event_cb(ui_DoubleDispenseCancelBTN, DoubleDispenseCancelBTN_event_handler, LV_EVENT_ALL, NULL);
+ 
   lv_obj_add_event_cb(ui_UpIMGBTN, UpIMGBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_DownIMGBTN, DownIMGBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_TraycfgBTN, TraycfgBTN_event_handler, LV_EVENT_ALL, NULL);
@@ -183,7 +203,6 @@ void setup() {
   pixels.setBrightness(50);
   pixels.show();
   loadSettings();
-
 }
 
 

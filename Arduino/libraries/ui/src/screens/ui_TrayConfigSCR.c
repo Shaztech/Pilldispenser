@@ -98,7 +98,7 @@ void ui_TrayConfigSCR_screen_init(void)
     lv_obj_set_align(ui_TraynotinstalledLBL, LV_ALIGN_CENTER);
     lv_label_set_text(ui_TraynotinstalledLBL,
                       "Tray currently not \ninstalled, please change\ninstalled trays in settings.");
-    lv_obj_set_style_text_color(ui_TraynotinstalledLBL, lv_color_hex(0x941818), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_TraynotinstalledLBL, lv_color_hex(0xDA1B1B), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_TraynotinstalledLBL, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_TraynotinstalledLBL, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_TraynotinstalledLBL, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);

@@ -42,6 +42,14 @@ void saveSettings() {
   spkvolume = lv_slider_get_value(ui_VolSlider);
   preferences.putInt("spkvolume", spkvolume);
 
+  // Save reset hour
+  preferences.putInt("resethours", lv_dropdown_get_selected(ui_DayHourDROP));
+  resetHours = lv_dropdown_get_selected(ui_DayHourDROP);
+
+  // Save reset minutes
+  preferences.putInt("resetmins", lv_dropdown_get_selected(ui_DayMinutesDROP) * 5); // Assuming dropdown indices correspond to 5-min intervals
+  resetMin = lv_dropdown_get_selected(ui_DayMinutesDROP) * 5;
+
   preferences.end(); // Close the Preferences
 }
 
@@ -73,6 +81,16 @@ void loadSettings() {
   spkvolume = preferences.getInt("spkvolume", 10); // Default to 1 if not set
   lv_slider_set_value(ui_VolSlider, spkvolume, LV_ANIM_OFF);
 
+  // Load reset hour
+  int hourIndex = preferences.getInt("resethours", 0); // Provide default value
+  lv_dropdown_set_selected(ui_DayHourDROP, hourIndex);
+  resetHours = hourIndex;
+
+  // Load reset minutes
+  int minIndex = preferences.getInt("resetmins", 0) / 5; // Assuming dropdown indices correspond to 5-min intervals
+  lv_dropdown_set_selected(ui_DayMinutesDROP, minIndex);
+  resetMin = minIndex * 5;
+
   preferences.end(); // Close the Preferences
 }
 
@@ -100,6 +118,18 @@ void clearTrayPreferences(int trayIndex) {
   preferences.remove(key);
 
   snprintf(key, sizeof(key), "trayColor%d", trayIndex);
+  preferences.remove(key);
+
+  snprintf(key, sizeof(key), "trayColor%d", trayIndex);
+  preferences.remove(key);
+
+  snprintf(key, sizeof(key), "trayColor%d", trayIndex);
+  preferences.remove(key);
+
+  snprintf(key, sizeof(key), "traydisptoday%d", trayIndex);
+  preferences.remove(key);
+  
+  snprintf(key, sizeof(key), "traydismtoday%d", trayIndex);
   preferences.remove(key);
 
   preferences.end(); // Close the Preferences
@@ -179,6 +209,12 @@ void loadTraySettings(int trayIndex) {
     lv_obj_clear_state(ui_TrayAlertCHK, LV_STATE_CHECKED);
     trayAlertEna[trayIndex] = false;
   }
+
+  // Load tray dispensed/dismissed for the day status
+  snprintf(key, sizeof(key), "traydisptoday%d", trayIndex);
+  traydisptoday[trayIndex] = preferences.getBool(key, false); // Provide default value
+  snprintf(key, sizeof(key), "traydismtoday%d", trayIndex);
+  traydismtoday[trayIndex] = preferences.getBool(key, false); // Provide default value
 
   // Load color value (int)
   snprintf(key, sizeof(key), "trayColor%d", trayIndex);

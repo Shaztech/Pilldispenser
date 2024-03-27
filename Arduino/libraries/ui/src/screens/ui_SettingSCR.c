@@ -127,17 +127,6 @@ void ui_SettingSCR_screen_init(void)
     lv_obj_set_style_bg_color(ui_DSTCHK, lv_color_hex(0x3175DE), LV_PART_INDICATOR | LV_STATE_CHECKED);
     lv_obj_set_style_bg_opa(ui_DSTCHK, 255, LV_PART_INDICATOR | LV_STATE_CHECKED);
 
-    ui_WifiInfoLBL = lv_label_create(ui_SettingSCR);
-    lv_obj_set_width(ui_WifiInfoLBL, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_WifiInfoLBL, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_WifiInfoLBL, 78);
-    lv_obj_set_y(ui_WifiInfoLBL, -13);
-    lv_obj_set_align(ui_WifiInfoLBL, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_WifiInfoLBL,
-                      "Without wifi connection \nyou cannot set time \nand you will have \nno automatic alerts.");
-    lv_obj_set_style_text_align(ui_WifiInfoLBL, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WifiInfoLBL, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
-
     ui_SettingBackBTN = lv_btn_create(ui_SettingSCR);
     lv_obj_set_width(ui_SettingBackBTN, 128);
     lv_obj_set_height(ui_SettingBackBTN, 24);
@@ -230,6 +219,52 @@ void ui_SettingSCR_screen_init(void)
     lv_obj_set_y(ui_VolTestBTNLBL, 1);
     lv_obj_set_align(ui_VolTestBTNLBL, LV_ALIGN_CENTER);
     lv_label_set_text(ui_VolTestBTNLBL, "Test");
+
+    ui_DayHourDROP = lv_dropdown_create(ui_SettingSCR);
+    lv_dropdown_set_options(ui_DayHourDROP,
+                            "00\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23");
+    lv_obj_set_width(ui_DayHourDROP, 60);
+    lv_obj_set_height(ui_DayHourDROP, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_DayHourDROP, 172);
+    lv_obj_set_y(ui_DayHourDROP, 94);
+    lv_obj_add_flag(ui_DayHourDROP, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_set_style_border_color(ui_DayHourDROP, lv_color_hex(0x3175DE), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_DayHourDROP, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+
+
+    ui_DayMinutesDROP = lv_dropdown_create(ui_SettingSCR);
+    lv_dropdown_set_options(ui_DayMinutesDROP, "00\n05\n10\n15\n20\n25\n30\n35\n40\n45\n50\n55\n");
+    lv_obj_set_width(ui_DayMinutesDROP, 60);
+    lv_obj_set_height(ui_DayMinutesDROP, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_DayMinutesDROP, 235);
+    lv_obj_set_y(ui_DayMinutesDROP, 93);
+    lv_obj_add_flag(ui_DayMinutesDROP, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_set_style_border_color(ui_DayMinutesDROP, lv_color_hex(0x3175DE), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_DayMinutesDROP, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+
+
+    ui_StartofthedayLBL = lv_label_create(ui_SettingSCR);
+    lv_obj_set_width(ui_StartofthedayLBL, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_StartofthedayLBL, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_StartofthedayLBL, 74);
+    lv_obj_set_y(ui_StartofthedayLBL, -39);
+    lv_obj_set_align(ui_StartofthedayLBL, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_StartofthedayLBL, "Start of the Day");
+
+    ui_WifiInfoLBL = lv_label_create(ui_SettingSCR);
+    lv_obj_set_width(ui_WifiInfoLBL, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_WifiInfoLBL, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_WifiInfoLBL, 74);
+    lv_obj_set_y(ui_WifiInfoLBL, -16);
+    lv_obj_set_align(ui_WifiInfoLBL, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_WifiInfoLBL,
+                      "Without wifi connection \nyou cannot set time \nand you will have \nno automatic alerts.");
+    lv_obj_set_style_text_align(ui_WifiInfoLBL, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WifiInfoLBL, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_WifiInfoLBL, lv_color_hex(0x292831), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_WifiInfoLBL, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_WifiBTN, ui_event_WifiBTN, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_UTCSlider, ui_event_UTCSlider, LV_EVENT_ALL, NULL);

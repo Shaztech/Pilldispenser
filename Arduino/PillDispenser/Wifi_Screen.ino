@@ -38,6 +38,7 @@ void connectToWifi() { //called by timer
     lv_obj_add_flag(ui_NoWifiIconIMG, LV_OBJ_FLAG_HIDDEN);
     lv_obj_clear_flag(ui_WifiIconIMG, LV_OBJ_FLAG_HIDDEN);
     lv_obj_clear_flag(ui_ClockLBL, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_WifiInfoLBL, LV_OBJ_FLAG_HIDDEN);
     internetstatus = 1;
     lv_label_set_text(ui_WifiScanPANLBL, message.c_str());
     lv_label_set_text(ui_SkipWifiBTNLBL, "Next");
@@ -46,6 +47,7 @@ void connectToWifi() { //called by timer
     lv_obj_clear_flag(ui_NoWifiIconIMG, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(ui_WifiIconIMG, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(ui_ClockLBL, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_clear_flag(ui_WifiInfoLBL, LV_OBJ_FLAG_HIDDEN);
     internetstatus = 0;
     lv_label_set_text(ui_WifiScanPANLBL, "Failed to connect.\nClick scan to try again.");
   }

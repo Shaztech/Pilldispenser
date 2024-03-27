@@ -81,6 +81,12 @@ String processor(const String& var) {
     }
     selectHTML += "</select>";
     return selectHTML;
+  } else if (var == "RESETTIMEBOX") {
+    int hour =  resetHours;
+    int minute = resetMin;
+    char timeInput[64];
+    snprintf(timeInput, sizeof(timeInput), "<input type=\"time\" name=\"resettime\" value=\"%02d:%02d\" step=\"300\">", hour, minute);
+    return String(timeInput);
   } else if (var == "TIMEBOX1") {
     int hour =  trayHours[1];
     int minute = trayMin[1];
@@ -453,6 +459,18 @@ void webroute() {
     preferences.putBool("dstEnabled", dstEnabled);
     preferences.putBool("clockSS", clockSS);
     preferences.putBool("muteSound", muteSound);
+
+    // Handle time settings
+    if (request->hasParam("resettime")) {
+      String timeValue = request->getParam("resettime")->value();
+      int hour, minute;
+      sscanf(timeValue.c_str(), "%d:%d", &hour, &minute);
+      // Assuming trayHours and trayMin are int arrays
+      resetHours = hour;
+      resetMin = minute;
+      preferences.putInt("resethours", resetHours);
+      preferences.putInt("resetmins", resetMin);
+    }
 
     preferences.end(); // Close the Preferences
 

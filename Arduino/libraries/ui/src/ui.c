@@ -36,19 +36,24 @@ lv_obj_t * ui_PAGE1CON;
 lv_obj_t * ui_BaseIMG;
 lv_obj_t * ui_TrayIMG1;
 lv_obj_t * ui_TrayNumLBL1;
+lv_obj_t * ui_TrayCheckIMG1;
 lv_obj_t * ui_TrayLBL1;
 lv_obj_t * ui_TrayIMG2;
 lv_obj_t * ui_TrayNumLBL2;
 lv_obj_t * ui_TrayLBL2;
+lv_obj_t * ui_TrayCheckIMG2;
 lv_obj_t * ui_TrayIMG3;
 lv_obj_t * ui_TrayNumLBL3;
 lv_obj_t * ui_TrayLBL3;
+lv_obj_t * ui_TrayCheckIMG3;
 lv_obj_t * ui_TrayIMG4;
 lv_obj_t * ui_TrayNumLBL4;
 lv_obj_t * ui_TrayLBL4;
+lv_obj_t * ui_TrayCheckIMG4;
 lv_obj_t * ui_TrayIMG5;
 lv_obj_t * ui_TrayNumLBL5;
 lv_obj_t * ui_TrayLBL5;
+lv_obj_t * ui_TrayCheckIMG5;
 void ui_event_UpIMGBTN(lv_event_t * e);
 lv_obj_t * ui_UpIMGBTN;
 lv_obj_t * ui_PAGE2CON;
@@ -58,20 +63,42 @@ lv_obj_t * ui_DownIMGBTN;
 lv_obj_t * ui_TrayIMG6;
 lv_obj_t * ui_TrayNumLBL6;
 lv_obj_t * ui_TrayLBL6;
+lv_obj_t * ui_TrayCheckIMG6;
 lv_obj_t * ui_TrayIMG7;
 lv_obj_t * ui_TrayNumLBL7;
 lv_obj_t * ui_TrayLBL7;
+lv_obj_t * ui_TrayCheckIMG7;
 lv_obj_t * ui_TrayIMG8;
 lv_obj_t * ui_TrayNumLBL8;
 lv_obj_t * ui_TrayLBL8;
+lv_obj_t * ui_TrayCheckIMG8;
 lv_obj_t * ui_TrayIMG9;
 lv_obj_t * ui_TrayNumLBL9;
 lv_obj_t * ui_TrayLBL9;
+lv_obj_t * ui_TrayCheckIMG9;
 lv_obj_t * ui_TrayIMG10;
 lv_obj_t * ui_TrayNumLBL10;
 lv_obj_t * ui_TrayLBL10;
+lv_obj_t * ui_TrayCheckIMG10;
+void ui_event_DismissBTN(lv_event_t * e);
 lv_obj_t * ui_DismissBTN;
 lv_obj_t * ui_DissmissBTNLBL;
+lv_obj_t * ui_DismissPAN;
+void ui_event_TrueDismissBTN(lv_event_t * e);
+lv_obj_t * ui_TrueDismissBTN;
+lv_obj_t * ui_TrueDissmissBTNLBL;
+void ui_event_DismissCancelBTN(lv_event_t * e);
+lv_obj_t * ui_DismissCancelBTN;
+lv_obj_t * ui_DismissCancelBTNLBL;
+lv_obj_t * ui_DismissLBL;
+lv_obj_t * ui_DoubletakePAN;
+void ui_event_DispenseAgainBTN(lv_event_t * e);
+lv_obj_t * ui_DispenseAgainBTN;
+lv_obj_t * ui_DispenseAgainBTNLBL;
+void ui_event_DoubleDispenseCancelBTN(lv_event_t * e);
+lv_obj_t * ui_DoubleDispenseCancelBTN;
+lv_obj_t * ui_DoubleDispenseCancelBTNLBL;
+lv_obj_t * ui_DoubleDispenseLBL;
 
 
 // SCREEN: ui_WifiSCR
@@ -107,7 +134,6 @@ lv_obj_t * ui_UTCLBL;
 lv_obj_t * ui_VolLBL;
 lv_obj_t * ui_MuteCHK;
 lv_obj_t * ui_DSTCHK;
-lv_obj_t * ui_WifiInfoLBL;
 lv_obj_t * ui_SettingBackBTN;
 lv_obj_t * ui_SettingBackBTNLBL;
 lv_obj_t * ui_HowManyTrayDROP;
@@ -118,6 +144,10 @@ lv_obj_t * ui_SettingBackBTN1;
 lv_obj_t * ui_SettingBackBTNLBL1;
 lv_obj_t * ui_VolTestBTN;
 lv_obj_t * ui_VolTestBTNLBL;
+lv_obj_t * ui_DayHourDROP;
+lv_obj_t * ui_DayMinutesDROP;
+lv_obj_t * ui_StartofthedayLBL;
+lv_obj_t * ui_WifiInfoLBL;
 
 
 // SCREEN: ui_TrayConfigSCR
@@ -231,6 +261,47 @@ void ui_event_DownIMGBTN(lv_event_t * e)
         _ui_state_modify(ui_TrayIMG8, LV_STATE_CHECKED, _UI_MODIFY_STATE_REMOVE);
         _ui_state_modify(ui_TrayIMG7, LV_STATE_CHECKED, _UI_MODIFY_STATE_REMOVE);
         _ui_state_modify(ui_TrayIMG6, LV_STATE_CHECKED, _UI_MODIFY_STATE_REMOVE);
+    }
+}
+void ui_event_DismissBTN(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_flag_modify(ui_DismissPAN, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+    }
+}
+void ui_event_TrueDismissBTN(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_flag_modify(ui_DismissPAN, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+        _ui_flag_modify(ui_DismissBTN, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+    }
+}
+void ui_event_DismissCancelBTN(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_flag_modify(ui_DismissPAN, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+    }
+}
+void ui_event_DispenseAgainBTN(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_flag_modify(ui_DoubletakePAN, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+    }
+}
+void ui_event_DoubleDispenseCancelBTN(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_flag_modify(ui_DoubletakePAN, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
     }
 }
 void ui_event_SkipWifiBTN(lv_event_t * e)

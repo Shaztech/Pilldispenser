@@ -15,6 +15,8 @@ SET(SOURCES screens/ui_SplashSCR.c
     images/ui_img_2117515183.c
     images/ui_img_base_png.c
     images/ui_img_tray_png.c
+    images/ui_img_red_cross_png.c
+    images/ui_img_green_check_png.c
     images/ui_img_arrowupdown_png.c
     images/ui_img_topcap_png.c
     images/ui_img_arrowupdown2_png.c

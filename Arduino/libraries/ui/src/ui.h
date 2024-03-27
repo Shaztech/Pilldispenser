@@ -50,19 +50,24 @@ extern lv_obj_t * ui_PAGE1CON;
 extern lv_obj_t * ui_BaseIMG;
 extern lv_obj_t * ui_TrayIMG1;
 extern lv_obj_t * ui_TrayNumLBL1;
+extern lv_obj_t * ui_TrayCheckIMG1;
 extern lv_obj_t * ui_TrayLBL1;
 extern lv_obj_t * ui_TrayIMG2;
 extern lv_obj_t * ui_TrayNumLBL2;
 extern lv_obj_t * ui_TrayLBL2;
+extern lv_obj_t * ui_TrayCheckIMG2;
 extern lv_obj_t * ui_TrayIMG3;
 extern lv_obj_t * ui_TrayNumLBL3;
 extern lv_obj_t * ui_TrayLBL3;
+extern lv_obj_t * ui_TrayCheckIMG3;
 extern lv_obj_t * ui_TrayIMG4;
 extern lv_obj_t * ui_TrayNumLBL4;
 extern lv_obj_t * ui_TrayLBL4;
+extern lv_obj_t * ui_TrayCheckIMG4;
 extern lv_obj_t * ui_TrayIMG5;
 extern lv_obj_t * ui_TrayNumLBL5;
 extern lv_obj_t * ui_TrayLBL5;
+extern lv_obj_t * ui_TrayCheckIMG5;
 void ui_event_UpIMGBTN(lv_event_t * e);
 extern lv_obj_t * ui_UpIMGBTN;
 extern lv_obj_t * ui_PAGE2CON;
@@ -72,20 +77,42 @@ extern lv_obj_t * ui_DownIMGBTN;
 extern lv_obj_t * ui_TrayIMG6;
 extern lv_obj_t * ui_TrayNumLBL6;
 extern lv_obj_t * ui_TrayLBL6;
+extern lv_obj_t * ui_TrayCheckIMG6;
 extern lv_obj_t * ui_TrayIMG7;
 extern lv_obj_t * ui_TrayNumLBL7;
 extern lv_obj_t * ui_TrayLBL7;
+extern lv_obj_t * ui_TrayCheckIMG7;
 extern lv_obj_t * ui_TrayIMG8;
 extern lv_obj_t * ui_TrayNumLBL8;
 extern lv_obj_t * ui_TrayLBL8;
+extern lv_obj_t * ui_TrayCheckIMG8;
 extern lv_obj_t * ui_TrayIMG9;
 extern lv_obj_t * ui_TrayNumLBL9;
 extern lv_obj_t * ui_TrayLBL9;
+extern lv_obj_t * ui_TrayCheckIMG9;
 extern lv_obj_t * ui_TrayIMG10;
 extern lv_obj_t * ui_TrayNumLBL10;
 extern lv_obj_t * ui_TrayLBL10;
+extern lv_obj_t * ui_TrayCheckIMG10;
+void ui_event_DismissBTN(lv_event_t * e);
 extern lv_obj_t * ui_DismissBTN;
 extern lv_obj_t * ui_DissmissBTNLBL;
+extern lv_obj_t * ui_DismissPAN;
+void ui_event_TrueDismissBTN(lv_event_t * e);
+extern lv_obj_t * ui_TrueDismissBTN;
+extern lv_obj_t * ui_TrueDissmissBTNLBL;
+void ui_event_DismissCancelBTN(lv_event_t * e);
+extern lv_obj_t * ui_DismissCancelBTN;
+extern lv_obj_t * ui_DismissCancelBTNLBL;
+extern lv_obj_t * ui_DismissLBL;
+extern lv_obj_t * ui_DoubletakePAN;
+void ui_event_DispenseAgainBTN(lv_event_t * e);
+extern lv_obj_t * ui_DispenseAgainBTN;
+extern lv_obj_t * ui_DispenseAgainBTNLBL;
+void ui_event_DoubleDispenseCancelBTN(lv_event_t * e);
+extern lv_obj_t * ui_DoubleDispenseCancelBTN;
+extern lv_obj_t * ui_DoubleDispenseCancelBTNLBL;
+extern lv_obj_t * ui_DoubleDispenseLBL;
 // SCREEN: ui_WifiSCR
 void ui_WifiSCR_screen_init(void);
 extern lv_obj_t * ui_WifiSCR;
@@ -117,7 +144,6 @@ extern lv_obj_t * ui_UTCLBL;
 extern lv_obj_t * ui_VolLBL;
 extern lv_obj_t * ui_MuteCHK;
 extern lv_obj_t * ui_DSTCHK;
-extern lv_obj_t * ui_WifiInfoLBL;
 extern lv_obj_t * ui_SettingBackBTN;
 extern lv_obj_t * ui_SettingBackBTNLBL;
 extern lv_obj_t * ui_HowManyTrayDROP;
@@ -128,6 +154,10 @@ extern lv_obj_t * ui_SettingBackBTN1;
 extern lv_obj_t * ui_SettingBackBTNLBL1;
 extern lv_obj_t * ui_VolTestBTN;
 extern lv_obj_t * ui_VolTestBTNLBL;
+extern lv_obj_t * ui_DayHourDROP;
+extern lv_obj_t * ui_DayMinutesDROP;
+extern lv_obj_t * ui_StartofthedayLBL;
+extern lv_obj_t * ui_WifiInfoLBL;
 // SCREEN: ui_TrayConfigSCR
 void ui_TrayConfigSCR_screen_init(void);
 void ui_event_TrayConfigSCR(lv_event_t * e);
@@ -183,6 +213,8 @@ LV_IMG_DECLARE(ui_img_231307730);    // assets/Wifi-16.png
 LV_IMG_DECLARE(ui_img_2117515183);    // assets/Nowifi-16.png
 LV_IMG_DECLARE(ui_img_base_png);    // assets/Base.png
 LV_IMG_DECLARE(ui_img_tray_png);    // assets/Tray.png
+LV_IMG_DECLARE(ui_img_red_cross_png);    // assets/Red_Cross.png
+LV_IMG_DECLARE(ui_img_green_check_png);    // assets/Green_Check.png
 LV_IMG_DECLARE(ui_img_arrowupdown_png);    // assets/ArrowUpDown.png
 LV_IMG_DECLARE(ui_img_topcap_png);    // assets/TopCap.png
 LV_IMG_DECLARE(ui_img_arrowupdown2_png);    // assets/ArrowUpDown2.png

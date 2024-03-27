@@ -26,6 +26,7 @@ static void startup_step2_timer(lv_timer_t * timer) { //Startup Step 2 (Connecti
     lv_obj_add_flag(ui_NoWifiIconIMG, LV_OBJ_FLAG_HIDDEN);
     lv_obj_clear_flag(ui_WifiIconIMG, LV_OBJ_FLAG_HIDDEN);
     lv_obj_clear_flag(ui_ClockLBL, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_WifiInfoLBL, LV_OBJ_FLAG_HIDDEN);
     internetstatus = 1;
     String message = "Connected - IP ";
     message += WiFi.localIP().toString(); // Append the IP address to the message
@@ -38,6 +39,7 @@ static void startup_step2_timer(lv_timer_t * timer) { //Startup Step 2 (Connecti
     lv_obj_clear_flag(ui_NoWifiIconIMG, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(ui_WifiIconIMG, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(ui_ClockLBL, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_clear_flag(ui_WifiInfoLBL, LV_OBJ_FLAG_HIDDEN);
     internetstatus = 0;
     lv_label_set_text(ui_LoadinginfoLBL, "Connection Error...");
     lv_timer_create(startup_step3_timer, 2000, NULL);
@@ -160,7 +162,6 @@ static void startup_step15_timer(lv_timer_t * timer) { //Startup Step 15 (Load M
   for (int i = 1; i <= 10; i++) {
     loadTraySettings(i);
   }
-  updateTrays();
   pixels.setPixelColor(1, pixels.Color(0, 0, 0));
   pixels.show();
 
@@ -171,9 +172,12 @@ static void startup_step15_timer(lv_timer_t * timer) { //Startup Step 15 (Load M
   }
   lv_timer_create(check_trays_timer_cb, 15000, NULL); // 15000 ms = 15 sec
   lv_timer_create(flashing_timer, 250, NULL);
+  updateTrays();
   systemloaded = true;
+  
   //lv_obj_clear_state(ui_DispenseBTN, LV_STATE_DISABLED); // Enable the dispense button FOR DEBUGGING !!!!!!!!!!!!!!!!!
   //lv_label_set_text(ui_DispenseBTNLBL, "Dispense\nFlashing\nTray(s)\n(By color)"); ///FOR DEBUGGING !!!!!!!!!!!!!!!!!
+  //lv_obj_clear_flag(ui_DismissBTN, LV_OBJ_FLAG_HIDDEN); // Show the dismiss button ///FOR DEBUGGING !!!!!!!!!!!!!!!!!
   //placethings(); ///FOR DEBUGGING !!!!!!!!!!!!!!!!!
 
   lv_timer_del(timer);

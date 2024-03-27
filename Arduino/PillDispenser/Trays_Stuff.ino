@@ -16,6 +16,25 @@ void updateTrays() {
       lv_label_set_text(ui_TrayLBL[i], "Not Installed"); // Update label text
       trayEnabled[i] = false;
     }
+    lv_obj_add_flag(ui_TrayCheckIMG[i], LV_OBJ_FLAG_HIDDEN); // Hide all checkmarks
+  }
+  checkmark();
+}
+
+void checkmark() {
+  for (int i = 1; i <= 10; i++) {
+    if (trayEnabled[i] && trayAlertEna[i]) {
+      if (traydisptoday[i] || traydismtoday[i]) {
+        lv_obj_clear_flag(ui_TrayCheckIMG[i], LV_OBJ_FLAG_HIDDEN);
+        if (traydismtoday[i]) {
+          lv_img_set_src(ui_TrayCheckIMG[i], &ui_img_red_cross_png);
+        } else {
+          lv_img_set_src(ui_TrayCheckIMG[i], &ui_img_green_check_png);
+        }
+      } else {
+        lv_obj_add_flag(ui_TrayCheckIMG[i], LV_OBJ_FLAG_HIDDEN);
+      }
+    }
   }
 }
 
