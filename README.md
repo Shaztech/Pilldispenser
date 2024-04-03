@@ -38,7 +38,7 @@ Please check the user manual for the usage of the device.
 ### Printed parts (STL Files) [(complete profile in makerworld)](https://makerworld.com/en/models/389626):
 
 - A1 - Base Bottom [1x] (Printed with supports for the top of the lcd, the usb port and the base of the dispenser opening, 15% infill)
-There's 2 base version, one with a chute and a door, the other one is with a removable cup
+    - There's 2 base version, one with a chute and a door, the other one is with a removable cup
 - A1.1 - Base Washer Holder [3x optional] (no supports, 15% infill)
 - A1.2 - Cup (for the base A1b ONLY) [1x]
 - A2 - LCD Holder [1x] (buildplate supports, 50% infill)
@@ -71,7 +71,7 @@ There's 2 base version, one with a chute and a door, the other one is with a rem
   - B2.2 - SMD Capacitor 0.1uf/6.3V (1206) [1x]
   - B2.3 - 74AHCT125N (SOIC14) [1x]
 - B3 - Tray PCB [1x per tray]
-  There's now 2 version of the board (Straight and shifting). The shifting version (original),
+  - There's now 2 version of the board (Straight and shifting). The shifting version (original),
   is for trays that always will be in stacking order (trays 1 at the bottom and 10 at the top).
   The straight version, is to designate a certain tray to be #1 or 2... and can be placed anywhere in the stack.
   ONLY USE ONE MODEL OF THE PCB - DO NOT MIX.
