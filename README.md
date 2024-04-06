@@ -26,7 +26,7 @@ Please check the user manual for the usage of the device.
 - Manual dispense of each tray
 - Visual indication of remaining pills (P-Touch label 30 to E)
 - Web interface for easy configuration with browser
-- Telegram integration (near future...)
+- Telegram integration
 
 ![Alt text](/Pictures/Screens.png?raw=true "Title")
 ![Alt text](/Pictures/TraywithPills.jpg?raw=true "Title")
@@ -134,7 +134,7 @@ The top dust cap have a hole to insert the stylus that usually come with the LCD
 - Find the Serial COM port number (in device manager)
 - open a command line inside your folder and type, change the COM port that match your device:
 
-esptool.exe --chip esp32 --port COM4 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x1000 PillDispenser.bootloader.v1_1.bin 0x8000 PillDispenser.partitions.v1_1.bin 0xe000 boot_app0.bin 0x10000 PillDispenser.esp32.v1_1.bin 0x3D0000 PillDispenser.spiffs.v1_1.bin
+esptool.exe --chip esp32 --port COM4 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x1000 PillDispenser.bootloader.v1_2.bin 0x8000 PillDispenser.partitions.v1_2.bin 0xe000 boot_app0.bin 0x10000 PillDispenser.esp32.v1_2.bin 0x3D0000 PillDispenser.spiffs.v1_2.bin
 
 ### In the future if there's an update:
 Use the OTA update page in the web portal of the device, only 2 bin files are needed (esp32 and spiff)
