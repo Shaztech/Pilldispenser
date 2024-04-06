@@ -108,6 +108,7 @@ void dispensebatch(int colorindex) {
         Playsound(2);
         solidLED = true;
         lv_scr_load(ui_PickPillsSCR);
+        lv_timer_create(dismissPickpillsSCR, 30000, NULL);
         break;
       } else {
         dismissinprogress = false;
@@ -122,4 +123,12 @@ void dispensebatch(int colorindex) {
       break;
     }
   }
+}
+
+static void dismissPickpillsSCR(lv_timer_t * timer) {
+  solidLED = false;
+  showLED(pixels.Color(0, 0, 0));
+  placethings();
+  lv_scr_load(ui_MainSCR);
+  lv_timer_del(timer);
 }

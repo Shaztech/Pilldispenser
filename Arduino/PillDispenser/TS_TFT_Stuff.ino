@@ -34,11 +34,6 @@ void my_touchpad_read( lv_indev_drv_t * indev_drv, lv_indev_data_t * data )
       lv_timer_reset(inactivity_timer);//reset screensaver timer
       digitalWrite(21, HIGH);
     }
-
-    //Serial.print( "Touch x " );
-    //Serial.print( data->point.x );
-    //Serial.print( " y " );
-    //Serial.println( data->point.y );
   }
   else
   {

@@ -13,6 +13,10 @@
 #include "time.h"
 #include <Adafruit_NeoPixel.h>
 #include "DFRobotDFPlayerMini.h"
+#include <WiFiClientSecure.h>
+#include <UniversalTelegramBot.h>
+#include <ArduinoJson.h>
+#include "esp_task_wdt.h"
 
 #define XPT2046_IRQ 36
 #define XPT2046_MOSI 32
@@ -41,6 +45,9 @@ uint16_t touchScreenMinimumX = 300, touchScreenMaximumX = 3800, touchScreenMinim
 String ssidload, passwordload;
 bool systemloaded = false;
 String trayNames[11] = {"", "", "", "", "", "", "", "", "", "", ""};
+String BOT_TOKEN;
+String CHAT_ID;
+int telegramalertinterval;
 bool trayAlertEna[11] = {false, false, false, false, false, false, false, false, false, false, false};
 bool traytriggered[11] = {false, false, false, false, false, false, false, false, false, false, false};
 bool trayEnabled[11] = {false, false, false, false, false, false, false, false, false, false, false};
@@ -87,11 +94,14 @@ TFT_eSPI tft = TFT_eSPI(screenWidth, screenHeight);
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
 DFRobotDFPlayerMini myDFPlayer;
+WiFiClientSecure secured_client;
+UniversalTelegramBot* bot = nullptr;
 
 
 void setup() {
   Serial.begin( 115200 );
   Serial2.begin(9600, SERIAL_8N1, -1, 17);
+  esp_task_wdt_init(15, true);
 
   if (!SPIFFS.begin()) {
     return;
@@ -99,7 +109,7 @@ void setup() {
 
   String showversion = "LVGL v";
   showversion += String('.') + lv_version_major() + "." + lv_version_minor() + "." + lv_version_patch();
-  showversion += " - SOFT v.1.1"; // SOFTWARE VERSION DEFINITION
+  showversion += " - SOFT v.1.2"; // SOFTWARE VERSION DEFINITION
 
   Wire.begin(SDA_PIN, SCL_PIN);
   pwm.begin();

@@ -50,6 +50,13 @@ void saveSettings() {
   preferences.putInt("resetmins", lv_dropdown_get_selected(ui_DayMinutesDROP) * 5); // Assuming dropdown indices correspond to 5-min intervals
   resetMin = lv_dropdown_get_selected(ui_DayMinutesDROP) * 5;
 
+  // Save telegram timer interval
+  preferences.putInt("telinterv", telegramalertinterval);
+
+  // Save telegram infos
+  preferences.putString("bot_token", BOT_TOKEN);
+  preferences.putString("chat_id", CHAT_ID);
+
   preferences.end(); // Close the Preferences
 }
 
@@ -91,6 +98,13 @@ void loadSettings() {
   lv_dropdown_set_selected(ui_DayMinutesDROP, minIndex);
   resetMin = minIndex * 5;
 
+  // load telegram timer interval
+  telegramalertinterval = preferences.getInt("telinterv", 0);
+
+  // load telegram infos
+  BOT_TOKEN = preferences.getString("bot_token", "");
+  CHAT_ID = preferences.getString("chat_id", "");
+
   preferences.end(); // Close the Preferences
 }
 
@@ -128,7 +142,7 @@ void clearTrayPreferences(int trayIndex) {
 
   snprintf(key, sizeof(key), "traydisptoday%d", trayIndex);
   preferences.remove(key);
-  
+
   snprintf(key, sizeof(key), "traydismtoday%d", trayIndex);
   preferences.remove(key);
 

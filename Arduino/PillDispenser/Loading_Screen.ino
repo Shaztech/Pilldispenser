@@ -33,6 +33,7 @@ static void startup_step2_timer(lv_timer_t * timer) { //Startup Step 2 (Connecti
     lv_label_set_text(ui_LoadinginfoLBL, message.c_str());
     lv_timer_create(startup_step3_timer, 2000, NULL);
     lv_timer_del(timer);
+    secured_client.setCACert(TELEGRAM_CERTIFICATE_ROOT);
 
   } else {
     lv_bar_set_value(ui_LoadingBAR, 3, LV_ANIM_ON);
@@ -169,17 +170,14 @@ static void startup_step15_timer(lv_timer_t * timer) { //Startup Step 15 (Load M
     webroute();
     AsyncElegantOTA.begin(&server);
     server.begin();
+    if (BOT_TOKEN != "" && CHAT_ID != "") {
+      bot = new UniversalTelegramBot(BOT_TOKEN, secured_client);
+    }
   }
   lv_timer_create(check_trays_timer_cb, 15000, NULL); // 15000 ms = 15 sec
   lv_timer_create(flashing_timer, 250, NULL);
   updateTrays();
   systemloaded = true;
-  
-  //lv_obj_clear_state(ui_DispenseBTN, LV_STATE_DISABLED); // Enable the dispense button FOR DEBUGGING !!!!!!!!!!!!!!!!!
-  //lv_label_set_text(ui_DispenseBTNLBL, "Dispense\nFlashing\nTray(s)\n(By color)"); ///FOR DEBUGGING !!!!!!!!!!!!!!!!!
-  //lv_obj_clear_flag(ui_DismissBTN, LV_OBJ_FLAG_HIDDEN); // Show the dismiss button ///FOR DEBUGGING !!!!!!!!!!!!!!!!!
-  //placethings(); ///FOR DEBUGGING !!!!!!!!!!!!!!!!!
-
   lv_timer_del(timer);
 }
 

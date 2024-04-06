@@ -17,7 +17,6 @@ void notFound(AsyncWebServerRequest *request) {
 }
 
 String processor(const String& var) {
-  //Serial.println(var);
   if (var == "IP") {
     return getIP();
   }  else if (var == "AP") {
@@ -387,17 +386,76 @@ String processor(const String& var) {
     String value = String(trayNames[10]);
     texts += "<input maxlength=\"15\" name=\"trayNames10\" size=\"15\" type=\"text\" value=\"" + value + "\"/>";
     return texts;
+  }  else if (var == "BOTTOKENTXT") {
+    String texts = "";
+    String value = String(BOT_TOKEN);
+    texts += "<input maxlength=\"75\" name=\"bottoken\" size=\"40\" type=\"text\" value=\"" + value + "\"/>";
+    return texts;
+  }  else if (var == "CHATIDTXT") {
+    String texts = "";
+    String value = String(CHAT_ID);
+    texts += "<input maxlength=\"75\" name=\"chatID\" size=\"40\" type=\"text\" value=\"" + value + "\"/>";
+    return texts;
+  } else if (var == "ALERTAFTERBOX") {
+    String value = String(telegramalertinterval);
+    String selectHTML = "<select name=\"telegramalert\" id=\"telegramalert\">";
+    String choices[] = {"Disabled", "Instant", "5 min", "10 min", "15 min", "30 min", "45 min", "60 min"};
+    for (int i = 0; i <= 7; i++) {
+      selectHTML += "<option value=\"" + String(i) + "\"" + (value == String(i) ? " selected" : "") + ">" + choices[i] + "</option>";
+    }
+    selectHTML += "</select>";
+    return selectHTML;
   } else {
     return String("n/a");
   }
 }
 
 void webroute() {
-  // Route for root / web page
   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
     request->send(SPIFFS, "/index.html", String(), false, processor);
   });
 
+  server.on("/test", HTTP_GET, [](AsyncWebServerRequest * request) {
+
+    preferences.begin("appSettings", false); // Open Preferences with namespace "appSettings". False for read and write.
+    // Handle Telegram settings
+    if (request->hasParam("bottoken")) {
+      String valueout = request->getParam("bottoken")->value();
+      BOT_TOKEN = valueout;
+      preferences.putString("bot_token", BOT_TOKEN.c_str());
+    }
+    if (request->hasParam("chatID")) {
+      String valueout = request->getParam("chatID")->value();
+      CHAT_ID = valueout;
+      preferences.putString("chat_id", CHAT_ID.c_str());
+    }
+    if (request->hasParam("telegramalert")) {
+      String valueout = request->getParam("telegramalert")->value();
+      telegramalertinterval = valueout.toInt();
+      preferences.putInt("telinterv", telegramalertinterval);
+    }
+    preferences.end(); // Close the Preferences
+
+
+    if (request->hasParam("bottoken")) {
+      String valueout = request->getParam("bottoken")->value();
+      BOT_TOKEN = valueout;
+      preferences.putString("bot_token", BOT_TOKEN.c_str());
+    }
+    if (request->hasParam("chatID")) {
+      String valueout = request->getParam("chatID")->value();
+      CHAT_ID = valueout;
+      preferences.putString("chat_id", CHAT_ID.c_str());
+    }
+    if (BOT_TOKEN != "" && CHAT_ID != "") {
+      bot = new UniversalTelegramBot(BOT_TOKEN, secured_client);
+      String message = "This is a test, if you see this message your Bot Token and Chat ID are correct.";
+      bot->sendMessage(CHAT_ID, message, "");
+      delete bot;
+      bot = nullptr;
+    }
+    request->send(SPIFFS, "/index.html", String(), false, processor);
+  });
 
   server.on("/reset", HTTP_GET, [](AsyncWebServerRequest * request) {
 
@@ -447,7 +505,7 @@ void webroute() {
       utcOffset = valueout.toInt() - 12;
       preferences.putInt("utcOffset", utcOffset);
     }
-    if (request->hasParam("utcoffset")) {
+    if (request->hasParam("spkvolume")) {
       String valueout = request->getParam("spkvolume")->value();
       spkvolume = valueout.toInt() + 1;
       preferences.putInt("spkvolume", spkvolume);
@@ -472,9 +530,8 @@ void webroute() {
       preferences.putInt("resetmins", resetMin);
     }
 
+
     preferences.end(); // Close the Preferences
-
-
     preferences.begin("traySettings", false); // False for read and write.
 
     for (int i = 1; i <= 10; i++) {

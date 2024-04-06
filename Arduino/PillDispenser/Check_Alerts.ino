@@ -17,8 +17,24 @@ static void check_trays_timer_cb(lv_timer_t * timer) {
         }
         lv_timer_create(reset_triggered_timer, 120000, NULL);
         lv_timer_reset(alertsound_timer); //reset alert sound timer
-        Playsound(1);
 
+
+        if (BOT_TOKEN != "" && CHAT_ID != "") {
+          int telegraminterval;
+          switch (telegramalertinterval) {
+            case 0: telegraminterval = 100; break; // Disabled
+            case 1: telegraminterval = 30000; break; // Instant (30sec)
+            case 2: telegraminterval = 5 * 60 * 1000; break; // 5 min
+            case 3: telegraminterval = 10 * 60 * 1000; break; // 10 min
+            case 4: telegraminterval = 15 * 60 * 1000; break; // 15 min
+            case 5: telegraminterval = 30 * 60 * 1000; break; // 30 min
+            case 6: telegraminterval = 45 * 60 * 1000; break; // 45 min
+            case 7: telegraminterval = 60 * 60 * 1000; break; // 60 min
+          }
+          lv_timer_create(telegram_timer, telegraminterval, NULL);
+        }
+
+        Playsound(1);
         alertinprogress = true;
 
         lv_obj_add_state(ui_TraycfgBTN, LV_STATE_DISABLED); // Disable the tray config button
@@ -46,6 +62,27 @@ static void check_trays_timer_cb(lv_timer_t * timer) {
       preferences.end(); // Close the Preferences
     }
   }
+}
+
+static void telegram_timer(lv_timer_t * timer) {
+  if (alertinprogress && telegramalertinterval > 0 && internetstatus != 0) {
+    String message = "Please take your pills, an alert for the tray(s) ";
+    bool firstTray = true; // Flag to check if it's the first tray in the list
+    for (int i = 1; i <= 10; i++) {
+      if (traytriggered[i]) {
+        if (!firstTray) {
+          message += ", ";
+        }
+        message += "#" + String(i) + " (" + trayNames[i] + ")";
+        firstTray = false; // Update the flag as the first tray has been added
+      }
+    }
+    if (!firstTray) {
+      message += " is currently in progress.";
+      bot->sendMessage(CHAT_ID, message, "");
+    }
+  }
+  lv_timer_del(timer);
 }
 
 static void reset_triggered_timer(lv_timer_t * timer) { // Reset the alreadyTriggered flag after 120 sec

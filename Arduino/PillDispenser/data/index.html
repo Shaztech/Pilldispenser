@@ -106,7 +106,7 @@
 	</tbody>
 </table>
 	<p>(minutes will be converted to 5 mins intervals)</p>
-<hr>
+	<hr>
 <h3>- System Settings -</h3>
 <table align="center" border="0" cellpadding="3" cellspacing="4" style="width:400px;">
 	<tbody>
@@ -143,16 +143,38 @@
 <a href="/save"><button class="button">Save changes</button></a>
 <p>(Save changes will reboot the device.)</p>
 </form> 
-<a href="/reset"><button class="button">Factory reset</button></a>
-<p>(After a factory reset you will need to re-enter your wifi configurations directly on the device.)</p>
+<form action="/test">
 <hr>
+<h3>- Telegram Integration -</h3>
+<table align="center" border="0" cellpadding="3" cellspacing="4" style="width:400px;">
+	<tbody>
+		<tr>
+			<td style="text-align: right;"><span style="font-size: 12px;">Bot Token:</span></td>
+			<td>%BOTTOKENTXT%</td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><span style="font-size: 12px;">Chat ID:</span></td>
+			<td>%CHATIDTXT%</td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><span style="font-size: 12px;">Alert after:</span></td>
+			<td>%ALERTAFTERBOX%</span></td>
+		</tr>
+	</tbody>
+</table>
+	<p>(use Telegram <a href="https://telegram.me/BotFather" target="_blank">BotFather</a> to create your BOT)</p>
+	<a href="/test"><button class="button">Save and send test message</button></a>
+<hr>
+</form> 
 <h3>- Informations -</h3>
 <p style="line-height:2">IP adress: <strong> %IP%</strong><br />
 Current AP: <strong> %AP%</strong><br />
 Signal Level: <strong> %DB% dbm</strong><br />
 OTA Update: <a href="/update" target="_blank">Update Page</a><br/>
-&nbsp;</p>
 <hr>
+<a href="/reset"><button class="button">Factory reset</button></a>
+<p>(After a factory reset you will need to re-enter your wifi configurations directly on the device.)</p>
+&nbsp;</p>
 <p><span style="font-size:11px;">Copyright 2024 &copy; <a href="https://github.com/Shaztech/Pilldispenser" target="_blank">Shaztech.Info</a></span></p>
 
 <script>function toggleCheckbox(element) {
