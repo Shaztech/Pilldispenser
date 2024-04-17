@@ -57,6 +57,7 @@ bool alreadyTriggered[11] = {false};
 bool trayCheckedState[11] = {false}; // Initialize all as unchecked
 bool trayfastflash[11];
 bool solidLED;
+bool fixaligment = false;
 int trayHours[11];
 int trayMin[11];
 int resetHours;
@@ -109,7 +110,7 @@ void setup() {
 
   String showversion = "LVGL v";
   showversion += String('.') + lv_version_major() + "." + lv_version_minor() + "." + lv_version_patch();
-  showversion += " - SOFT v.1.2"; // SOFTWARE VERSION DEFINITION
+  showversion += " - SOFT v.1.3"; // SOFTWARE VERSION DEFINITION
 
   Wire.begin(SDA_PIN, SCL_PIN);
   pwm.begin();
@@ -187,7 +188,7 @@ void setup() {
   lv_obj_add_event_cb(ui_TrueDismissBTN, TrueDismissBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_DispenseAgainBTN, DispenseAgainBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_DoubleDispenseCancelBTN, DoubleDispenseCancelBTN_event_handler, LV_EVENT_ALL, NULL);
- 
+
   lv_obj_add_event_cb(ui_UpIMGBTN, UpIMGBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_DownIMGBTN, DownIMGBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_TraycfgBTN, TraycfgBTN_event_handler, LV_EVENT_ALL, NULL);
@@ -195,6 +196,7 @@ void setup() {
   lv_obj_add_event_cb(ui_TrayCfgClearBTN, TrayCfgClearBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_VolTestBTN, VolTestBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_DisplaceBTN, DisplaceBTN_event_handler, LV_EVENT_ALL, NULL);
+  lv_obj_add_event_cb(ui_HalfDisplaceBTN, HalfDisplaceBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_ColorRoller, roller_event_handler, LV_EVENT_VALUE_CHANGED, NULL);
   lv_obj_add_event_cb(ui_PickPillsSCR, pick_pills_screen_event_handler, LV_EVENT_CLICKED, NULL);
 

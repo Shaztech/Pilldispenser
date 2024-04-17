@@ -49,7 +49,11 @@ static void dispense_step1_timer(lv_timer_t * timer) { //Dispense Step 1
 }
 
 static void dispense_step2_timer(lv_timer_t * timer) { //Dispense Step 2
-  lv_timer_create(dispense_step3_timer, 500, NULL);
+  if (fixaligment) {
+    fixaligment = false;
+  } else {
+    lv_timer_create(dispense_step3_timer, 500, NULL);
+  }
   setServoPulse(traytodispense - 1, 70);
   lv_timer_del(timer);
 }

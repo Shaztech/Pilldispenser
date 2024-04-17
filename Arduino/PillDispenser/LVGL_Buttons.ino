@@ -34,6 +34,15 @@ static void DisplaceBTN_event_handler(lv_event_t * e) { // Displace Go Button
   }
 }
 
+static void HalfDisplaceBTN_event_handler(lv_event_t * e) { // Half Displace Go Button
+  lv_event_code_t code = lv_event_get_code(e);
+  if (code == LV_EVENT_CLICKED) {
+    fixaligment = true;
+    traytodispense = selectedtray;
+    lv_timer_t* timer = lv_timer_create(dispense_step1_timer, 250, NULL);
+  }
+}
+
 static void TrueDismissBTN_event_handler(lv_event_t * e) { // Dismiss Button
   lv_event_code_t code = lv_event_get_code(e);
   if (code == LV_EVENT_CLICKED) {

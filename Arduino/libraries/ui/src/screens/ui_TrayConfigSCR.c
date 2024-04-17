@@ -90,19 +90,6 @@ void ui_TrayConfigSCR_screen_init(void)
 
 
 
-    ui_TraynotinstalledLBL = lv_label_create(ui_TrayConfigSCR);
-    lv_obj_set_width(ui_TraynotinstalledLBL, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_TraynotinstalledLBL, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_TraynotinstalledLBL, 53);
-    lv_obj_set_y(ui_TraynotinstalledLBL, -16);
-    lv_obj_set_align(ui_TraynotinstalledLBL, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_TraynotinstalledLBL,
-                      "Tray currently not \ninstalled, please change\ninstalled trays in settings.");
-    lv_obj_set_style_text_color(ui_TraynotinstalledLBL, lv_color_hex(0xDA1B1B), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_TraynotinstalledLBL, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_align(ui_TraynotinstalledLBL, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_TraynotinstalledLBL, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
-
     ui_TrayAlertCHK = lv_checkbox_create(ui_TrayConfigSCR);
     lv_checkbox_set_text(ui_TrayAlertCHK, "Automatic Alert");
     lv_obj_set_width(ui_TrayAlertCHK, LV_SIZE_CONTENT);   /// 1
@@ -140,7 +127,7 @@ void ui_TrayConfigSCR_screen_init(void)
     lv_obj_set_width(ui_TrayCfgClearBTN, 193);
     lv_obj_set_height(ui_TrayCfgClearBTN, 36);
     lv_obj_set_x(ui_TrayCfgClearBTN, 122);
-    lv_obj_set_y(ui_TrayCfgClearBTN, 200);
+    lv_obj_set_y(ui_TrayCfgClearBTN, 202);
     lv_obj_clear_flag(ui_TrayCfgClearBTN,
                       LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SNAPPABLE |
                       LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_SCROLL_ELASTIC | LV_OBJ_FLAG_SCROLL_MOMENTUM |
@@ -167,32 +154,32 @@ void ui_TrayConfigSCR_screen_init(void)
     lv_obj_set_style_bg_opa(ui_ColorPanel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_width(ui_ColorPanel, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    ui_TrayDisplLBL = lv_label_create(ui_TrayConfigSCR);
+    lv_obj_set_width(ui_TrayDisplLBL, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_TrayDisplLBL, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_TrayDisplLBL, 122);
+    lv_obj_set_y(ui_TrayDisplLBL, 99);
+    lv_label_set_text(ui_TrayDisplLBL, "Tray Pos. Adjustment:");
+    lv_obj_set_style_text_align(ui_TrayDisplLBL, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     ui_DisplaceTrayDROP = lv_dropdown_create(ui_TrayConfigSCR);
     lv_dropdown_set_options(ui_DisplaceTrayDROP,
                             "E\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29");
     lv_obj_set_width(ui_DisplaceTrayDROP, 60);
     lv_obj_set_height(ui_DisplaceTrayDROP, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_DisplaceTrayDROP, 122);
-    lv_obj_set_y(ui_DisplaceTrayDROP, 157);
+    lv_obj_set_y(ui_DisplaceTrayDROP, 119);
     lv_obj_add_flag(ui_DisplaceTrayDROP, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
     lv_obj_set_style_border_color(ui_DisplaceTrayDROP, lv_color_hex(0x3175DE), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_opa(ui_DisplaceTrayDROP, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
 
 
-    ui_TrayDisplLBL = lv_label_create(ui_TrayConfigSCR);
-    lv_obj_set_width(ui_TrayDisplLBL, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_TrayDisplLBL, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_TrayDisplLBL, 122);
-    lv_obj_set_y(ui_TrayDisplLBL, 137);
-    lv_label_set_text(ui_TrayDisplLBL, "Tray Pos. Adjustment:");
-    lv_obj_set_style_text_align(ui_TrayDisplLBL, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-
     ui_TrayDisplLBL1 = lv_label_create(ui_TrayConfigSCR);
     lv_obj_set_width(ui_TrayDisplLBL1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_TrayDisplLBL1, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_TrayDisplLBL1, 191);
-    lv_obj_set_y(ui_TrayDisplLBL1, 167);
+    lv_obj_set_y(ui_TrayDisplLBL1, 129);
     lv_label_set_text(ui_TrayDisplLBL1, "to 30");
     lv_obj_set_style_text_align(ui_TrayDisplLBL1, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -200,7 +187,7 @@ void ui_TrayConfigSCR_screen_init(void)
     lv_obj_set_width(ui_DisplaceBTN, 79);
     lv_obj_set_height(ui_DisplaceBTN, 36);
     lv_obj_set_x(ui_DisplaceBTN, 236);
-    lv_obj_set_y(ui_DisplaceBTN, 157);
+    lv_obj_set_y(ui_DisplaceBTN, 119);
     lv_obj_clear_flag(ui_DisplaceBTN, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE |
                       LV_OBJ_FLAG_SNAPPABLE | LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_SCROLL_ELASTIC | LV_OBJ_FLAG_SCROLL_MOMENTUM |
                       LV_OBJ_FLAG_SCROLL_CHAIN);     /// Flags
@@ -214,6 +201,50 @@ void ui_TrayConfigSCR_screen_init(void)
     lv_obj_set_y(ui_DisplaceBTNLBL, 1);
     lv_obj_set_align(ui_DisplaceBTNLBL, LV_ALIGN_CENTER);
     lv_label_set_text(ui_DisplaceBTNLBL, "Go");
+
+    ui_TrayHalfStepLBL = lv_label_create(ui_TrayConfigSCR);
+    lv_obj_set_width(ui_TrayHalfStepLBL, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_TrayHalfStepLBL, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_TrayHalfStepLBL, 122);
+    lv_obj_set_y(ui_TrayHalfStepLBL, 164);
+    lv_label_set_text(ui_TrayHalfStepLBL, "Tray Aligment:\n(Half step)");
+    lv_obj_set_style_text_align(ui_TrayHalfStepLBL, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_HalfDisplaceBTN = lv_btn_create(ui_TrayConfigSCR);
+    lv_obj_set_width(ui_HalfDisplaceBTN, 79);
+    lv_obj_set_height(ui_HalfDisplaceBTN, 36);
+    lv_obj_set_x(ui_HalfDisplaceBTN, 236);
+    lv_obj_set_y(ui_HalfDisplaceBTN, 161);
+    lv_obj_clear_flag(ui_HalfDisplaceBTN,
+                      LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SNAPPABLE |
+                      LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_SCROLL_ELASTIC | LV_OBJ_FLAG_SCROLL_MOMENTUM |
+                      LV_OBJ_FLAG_SCROLL_CHAIN);     /// Flags
+    lv_obj_set_style_bg_color(ui_HalfDisplaceBTN, lv_color_hex(0x3175DD), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_HalfDisplaceBTN, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_HalfDisplaceBTNLBL = lv_label_create(ui_HalfDisplaceBTN);
+    lv_obj_set_width(ui_HalfDisplaceBTNLBL, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_HalfDisplaceBTNLBL, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_HalfDisplaceBTNLBL, 0);
+    lv_obj_set_y(ui_HalfDisplaceBTNLBL, 1);
+    lv_obj_set_align(ui_HalfDisplaceBTNLBL, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_HalfDisplaceBTNLBL, "Fix");
+
+    ui_TraynotinstalledLBL = lv_label_create(ui_TrayConfigSCR);
+    lv_obj_set_width(ui_TraynotinstalledLBL, 202);
+    lv_obj_set_height(ui_TraynotinstalledLBL, 104);
+    lv_obj_set_x(ui_TraynotinstalledLBL, 54);
+    lv_obj_set_y(ui_TraynotinstalledLBL, 25);
+    lv_obj_set_align(ui_TraynotinstalledLBL, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_TraynotinstalledLBL,
+                      "Tray currently not \ninstalled, please change\ninstalled trays in settings.");
+    lv_obj_add_flag(ui_TraynotinstalledLBL, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_set_style_text_color(ui_TraynotinstalledLBL, lv_color_hex(0xDA1B1B), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_TraynotinstalledLBL, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_TraynotinstalledLBL, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_TraynotinstalledLBL, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_TraynotinstalledLBL, lv_color_hex(0x292831), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_TraynotinstalledLBL, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Keyboard2 = lv_keyboard_create(ui_TrayConfigSCR);
     lv_obj_set_width(ui_Keyboard2, 320);
