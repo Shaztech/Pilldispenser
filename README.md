@@ -86,7 +86,7 @@ Please check the user manual for the usage of the device.
 - P5 - MicroSD Card (smallest/cheapest you can find, only needed for 2 tiny MP3) [1x]
 - P6 - Ø5mm x 1.5mm Neodinum magnet [1x]
 - P7 - Ø12mm rubber or foam pads [5x]
-- P8 - SG90 Servo (Blue type is fine) [1x per tray]
+- P8 - SG90 Servo 180° PWM Analog (Blue type is fine) [1x per tray]
 - P9 - Ball pen springs (0.4x4.5x18mm) [3x per tray]
 - P10 - Ø1.5mm x 14mm rod (I used Aluminium TIG rod, you can use anything that fit) [1x per tray]
 - P11 - Ø1.5mm x 12mm rod (I used Aluminium TIG rod, you can use anything that fit) [1x per tray]
