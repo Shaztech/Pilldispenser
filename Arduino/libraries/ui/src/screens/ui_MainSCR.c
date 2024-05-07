@@ -114,6 +114,16 @@ void ui_MainSCR_screen_init(void)
     lv_obj_add_flag(ui_BaseIMG, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_BaseIMG, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
+    ui_LCDLBL = lv_label_create(ui_BaseIMG);
+    lv_obj_set_width(ui_LCDLBL, 70);
+    lv_obj_set_height(ui_LCDLBL, 35);
+    lv_obj_set_x(ui_LCDLBL, -35);
+    lv_obj_set_y(ui_LCDLBL, 0);
+    lv_obj_set_align(ui_LCDLBL, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_LCDLBL, "LCD\nOff");
+    lv_obj_add_flag(ui_LCDLBL, LV_OBJ_FLAG_CLICKABLE);     /// Flags
+    lv_obj_set_style_text_align(ui_LCDLBL, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     ui_TrayIMG1 = lv_img_create(ui_PAGE1CON);
     lv_img_set_src(ui_TrayIMG1, &ui_img_tray_png);
     lv_obj_set_width(ui_TrayIMG1, LV_SIZE_CONTENT);   /// 1

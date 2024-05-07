@@ -19,8 +19,9 @@ static void check_trays_timer_cb(lv_timer_t * timer) {
         lv_timer_reset(alertsound_timer); //reset alert sound timer
 
 
-        if (BOT_TOKEN != "" && CHAT_ID != "") {
+        if (BOT_TOKEN != "" && CHAT_ID != "" && !telegram_alertonce) {
           int telegraminterval;
+          telegram_alertonce = true;
           switch (telegramalertinterval) {
             case 0: telegraminterval = 100; break; // Disabled
             case 1: telegraminterval = 30000; break; // Instant (30sec)
@@ -32,6 +33,7 @@ static void check_trays_timer_cb(lv_timer_t * timer) {
             case 7: telegraminterval = 60 * 60 * 1000; break; // 60 min
           }
           lv_timer_create(telegram_timer, telegraminterval, NULL);
+          lv_timer_create(telegram_resetalert, 5000, NULL);
         }
 
         Playsound(1);
@@ -62,6 +64,11 @@ static void check_trays_timer_cb(lv_timer_t * timer) {
       preferences.end(); // Close the Preferences
     }
   }
+}
+
+static void telegram_resetalert(lv_timer_t * timer) {
+  telegram_alertonce = false;
+  lv_timer_del(timer);
 }
 
 static void telegram_timer(lv_timer_t * timer) {

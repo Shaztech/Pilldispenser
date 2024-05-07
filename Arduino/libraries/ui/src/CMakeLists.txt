@@ -1,11 +1,12 @@
 SET(SOURCES screens/ui_SplashSCR.c
     screens/ui_MainSCR.c
     screens/ui_WifiSCR.c
-    screens/ui_SettingSCR.c
     screens/ui_TrayConfigSCR.c
     screens/ui_ClockSCR.c
     screens/ui_PickPillsSCR.c
     screens/ui_BlankSCR.c
+    screens/ui_SettingSCR.c
+    screens/ui_Setting2SCR.c
     ui.c
     components/ui_comp_hook.c
     ui_helpers.c

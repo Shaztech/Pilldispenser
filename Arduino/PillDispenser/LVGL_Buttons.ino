@@ -195,3 +195,11 @@ static void pick_pills_screen_event_handler(lv_event_t * e) {
     placethings();
   }
 }
+
+
+static void LCDLBL_event_handler(lv_event_t * e) { // Turn off lcd button
+  lv_event_code_t code = lv_event_get_code(e);
+  if (code == LV_EVENT_CLICKED) {
+    digitalWrite(21, LOW);
+  }
+}

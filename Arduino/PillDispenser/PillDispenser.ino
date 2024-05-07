@@ -1,3 +1,6 @@
+/// ESP32 Dev Module
+/// Minimal SPIFF
+
 #include <lvgl.h>
 #include <TFT_eSPI.h>
 #include <ui.h>
@@ -48,6 +51,7 @@ String trayNames[11] = {"", "", "", "", "", "", "", "", "", "", ""};
 String BOT_TOKEN;
 String CHAT_ID;
 int telegramalertinterval;
+bool telegram_alertonce = false;
 bool trayAlertEna[11] = {false, false, false, false, false, false, false, false, false, false, false};
 bool traytriggered[11] = {false, false, false, false, false, false, false, false, false, false, false};
 bool trayEnabled[11] = {false, false, false, false, false, false, false, false, false, false, false};
@@ -110,7 +114,7 @@ void setup() {
 
   String showversion = "LVGL v";
   showversion += String('.') + lv_version_major() + "." + lv_version_minor() + "." + lv_version_patch();
-  showversion += " - SOFT v.1.3"; // SOFTWARE VERSION DEFINITION
+  showversion += " - SOFT v.1.5"; // SOFTWARE VERSION DEFINITION
 
   Wire.begin(SDA_PIN, SCL_PIN);
   pwm.begin();
@@ -188,6 +192,7 @@ void setup() {
   lv_obj_add_event_cb(ui_TrueDismissBTN, TrueDismissBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_DispenseAgainBTN, DispenseAgainBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_DoubleDispenseCancelBTN, DoubleDispenseCancelBTN_event_handler, LV_EVENT_ALL, NULL);
+  lv_obj_add_event_cb(ui_LCDLBL, LCDLBL_event_handler, LV_EVENT_ALL, NULL);
 
   lv_obj_add_event_cb(ui_UpIMGBTN, UpIMGBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_DownIMGBTN, DownIMGBTN_event_handler, LV_EVENT_ALL, NULL);

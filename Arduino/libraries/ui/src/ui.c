@@ -34,6 +34,7 @@ lv_obj_t * ui_WifiIconIMG;
 lv_obj_t * ui_NoWifiIconIMG;
 lv_obj_t * ui_PAGE1CON;
 lv_obj_t * ui_BaseIMG;
+lv_obj_t * ui_LCDLBL;
 lv_obj_t * ui_TrayIMG1;
 lv_obj_t * ui_TrayNumLBL1;
 lv_obj_t * ui_TrayCheckIMG1;
@@ -119,37 +120,6 @@ lv_obj_t * ui_WifiScanPAN;
 lv_obj_t * ui_WifiScanPANLBL;
 
 
-// SCREEN: ui_SettingSCR
-void ui_SettingSCR_screen_init(void);
-lv_obj_t * ui_SettingSCR;
-void ui_event_WifiBTN(lv_event_t * e);
-lv_obj_t * ui_WifiBTN;
-lv_obj_t * ui_WifiBTNLBL;
-lv_obj_t * ui_WifiClearBTN;
-lv_obj_t * ui_WifiClearBTNLBL;
-void ui_event_UTCSlider(lv_event_t * e);
-lv_obj_t * ui_UTCSlider;
-lv_obj_t * ui_VolSlider;
-lv_obj_t * ui_UTCLBL;
-lv_obj_t * ui_VolLBL;
-lv_obj_t * ui_MuteCHK;
-lv_obj_t * ui_DSTCHK;
-lv_obj_t * ui_SettingBackBTN;
-lv_obj_t * ui_SettingBackBTNLBL;
-lv_obj_t * ui_HowManyTrayDROP;
-lv_obj_t * ui_InstalledTrayLBL;
-lv_obj_t * ui_ScreensaverCHK1;
-void ui_event_SettingBackBTN1(lv_event_t * e);
-lv_obj_t * ui_SettingBackBTN1;
-lv_obj_t * ui_SettingBackBTNLBL1;
-lv_obj_t * ui_VolTestBTN;
-lv_obj_t * ui_VolTestBTNLBL;
-lv_obj_t * ui_DayHourDROP;
-lv_obj_t * ui_DayMinutesDROP;
-lv_obj_t * ui_StartofthedayLBL;
-lv_obj_t * ui_WifiInfoLBL;
-
-
 // SCREEN: ui_TrayConfigSCR
 void ui_TrayConfigSCR_screen_init(void);
 void ui_event_TrayConfigSCR(lv_event_t * e);
@@ -206,6 +176,42 @@ lv_obj_t * ui_TakepillsIMG;
 void ui_BlankSCR_screen_init(void);
 void ui_event_BlankSCR(lv_event_t * e);
 lv_obj_t * ui_BlankSCR;
+
+
+// SCREEN: ui_SettingSCR
+void ui_SettingSCR_screen_init(void);
+lv_obj_t * ui_SettingSCR;
+void ui_event_WifiBTN(lv_event_t * e);
+lv_obj_t * ui_WifiBTN;
+lv_obj_t * ui_WifiBTNLBL;
+lv_obj_t * ui_WifiClearBTN;
+lv_obj_t * ui_WifiClearBTNLBL;
+void ui_event_UTCSlider(lv_event_t * e);
+lv_obj_t * ui_UTCSlider;
+lv_obj_t * ui_VolSlider;
+lv_obj_t * ui_UTCLBL;
+lv_obj_t * ui_VolLBL;
+lv_obj_t * ui_MuteCHK;
+lv_obj_t * ui_DSTCHK;
+lv_obj_t * ui_SettingBackBTN;
+lv_obj_t * ui_SettingBackBTNLBL;
+lv_obj_t * ui_HowManyTrayDROP;
+lv_obj_t * ui_InstalledTrayLBL;
+lv_obj_t * ui_ScreensaverCHK1;
+void ui_event_SettingBackBTN1(lv_event_t * e);
+lv_obj_t * ui_SettingBackBTN1;
+lv_obj_t * ui_SettingBackBTNLBL1;
+lv_obj_t * ui_VolTestBTN;
+lv_obj_t * ui_VolTestBTNLBL;
+lv_obj_t * ui_DayHourDROP;
+lv_obj_t * ui_DayMinutesDROP;
+lv_obj_t * ui_StartofthedayLBL;
+lv_obj_t * ui_WifiInfoLBL;
+
+
+// SCREEN: ui_Setting2SCR
+void ui_Setting2SCR_screen_init(void);
+lv_obj_t * ui_Setting2SCR;
 lv_obj_t * ui____initial_actions0;
 const lv_img_dsc_t * ui_imgset_arrowupdown[1] = {&ui_img_arrowupdown2_png};
 const lv_img_dsc_t * ui_imgset_870338999[1] = {&ui_img_2117515183};
@@ -315,30 +321,6 @@ void ui_event_SkipWifiBTN(lv_event_t * e)
         _ui_screen_change(&ui_SettingSCR, LV_SCR_LOAD_ANIM_NONE, 100, 0, &ui_SettingSCR_screen_init);
     }
 }
-void ui_event_WifiBTN(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_WifiSCR, LV_SCR_LOAD_ANIM_NONE, 100, 0, &ui_WifiSCR_screen_init);
-    }
-}
-void ui_event_UTCSlider(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_slider_set_text_value(ui_UTCLBL, target, "UTC Offset: ", "");
-    }
-}
-void ui_event_SettingBackBTN1(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_MainSCR, LV_SCR_LOAD_ANIM_NONE, 100, 0, &ui_MainSCR_screen_init);
-    }
-}
 void ui_event_TrayConfigSCR(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -428,6 +410,30 @@ void ui_event_BlankSCR(lv_event_t * e)
         _ui_screen_change(&ui_MainSCR, LV_SCR_LOAD_ANIM_NONE, 100, 0, &ui_MainSCR_screen_init);
     }
 }
+void ui_event_WifiBTN(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_WifiSCR, LV_SCR_LOAD_ANIM_NONE, 100, 0, &ui_WifiSCR_screen_init);
+    }
+}
+void ui_event_UTCSlider(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_VALUE_CHANGED) {
+        _ui_slider_set_text_value(ui_UTCLBL, target, "UTC Offset: ", "");
+    }
+}
+void ui_event_SettingBackBTN1(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_MainSCR, LV_SCR_LOAD_ANIM_NONE, 100, 0, &ui_MainSCR_screen_init);
+    }
+}
 
 ///////////////////// SCREENS ////////////////////
 
@@ -440,11 +446,12 @@ void ui_init(void)
     ui_SplashSCR_screen_init();
     ui_MainSCR_screen_init();
     ui_WifiSCR_screen_init();
-    ui_SettingSCR_screen_init();
     ui_TrayConfigSCR_screen_init();
     ui_ClockSCR_screen_init();
     ui_PickPillsSCR_screen_init();
     ui_BlankSCR_screen_init();
+    ui_SettingSCR_screen_init();
+    ui_Setting2SCR_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
     lv_disp_load_scr(ui_SplashSCR);
 }

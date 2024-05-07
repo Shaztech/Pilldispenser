@@ -164,6 +164,7 @@ static void startup_step15_timer(lv_timer_t * timer) { //Startup Step 15 (Load M
     loadTraySettings(i);
   }
   pixels.setPixelColor(1, pixels.Color(0, 0, 0));
+  pixels.setPixelColor(0, pixels.Color(0, 0, 0));
   pixels.show();
 
   if (internetstatus) {
