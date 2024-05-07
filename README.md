@@ -132,7 +132,7 @@ The top dust cap have a hole to insert the stylus that usually come with the LCD
 - Copy the 5 bin files to the root of the folder (with esptool.exe)
 - Connect your device (the ESP32 module with the LCD) to your computer via USB
 - Find the Serial COM port number (in device manager)
-- open a command line inside your folder and type, change the COM port that match your device:
+- open a command line inside your folder and type, change the COM port that match your device (don't forget to change the files version ex: v1.3):
 
 esptool.exe --chip esp32 --port COM4 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x1000 PillDispenser.bootloader.v1_3.bin 0x8000 PillDispenser.partitions.v1_3.bin 0xe000 boot_app0.bin 0x10000 PillDispenser.esp32.v1_3.bin 0x3D0000 PillDispenser.spiffs.v1_3.bin
 
