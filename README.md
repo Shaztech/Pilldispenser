@@ -79,7 +79,7 @@ Please check the user manual for the usage of the device.
   - B3.2 - PCB Header 12 pins Female [1x per tray]
  
 ### Parts purchased:
-- P1 - ESP-32 WROOM Development Board with LCD 320x240, resistive touch, 2.8 inch (Called CYD "Cheap Yellow Display")  [1x]
+- P1 - ESP-32 (ESP32-2432S028) WROOM Development Board with LCD 320x240, resistive touch, 2.8 inch (Called CYD "Cheap Yellow Display")  [1x]
 - P2 - Ø30mm 2W Speaker (or anything that fit in the case) [1x]
 - P3 - USB-C Female connector PCB (I used the 4 pins blue ones but any model that fit in the hole) [1x]
 - P4 - DFPlayer Mini board [1x]
