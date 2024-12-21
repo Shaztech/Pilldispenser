@@ -62,6 +62,7 @@ static void check_trays_timer_cb(lv_timer_t * timer) {
       preferences.putBool(key, traydismtoday[i]);
 
       preferences.end(); // Close the Preferences
+      myDFPlayer.reset();
     }
   }
 }

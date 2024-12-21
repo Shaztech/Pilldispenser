@@ -101,6 +101,9 @@ void loadSettings() {
   // load telegram timer interval
   telegramalertinterval = preferences.getInt("telinterv", 0);
 
+  // load default hostname
+  HOSTNAME = preferences.getString("mdnshostname", "pilldisp");
+
   // load telegram infos
   BOT_TOKEN = preferences.getString("bot_token", "");
   CHAT_ID = preferences.getString("chat_id", "");

@@ -6,6 +6,7 @@
 #include <ui.h>
 #include <XPT2046_Touchscreen.h>
 #include <WiFi.h>
+#include <ESPmDNS.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <SPIFFS.h>
@@ -37,7 +38,8 @@
 #define NUM_LEDS   2  // Number of LEDs in your strip
 
 // declaration
-String newHostname  = "PillsDisp";
+String versionnumber = "v.1.7";
+String HOSTNAME;
 lv_timer_t* inactivity_timer = NULL;
 lv_timer_t* alertsound_timer = NULL;
 static const uint16_t screenWidth  = 320;
@@ -90,6 +92,12 @@ int displacesteps;
 int selectedtray;
 int spkvolume;
 
+const int buttonPin = 4;  // GPIO4
+const int debounceDelay = 50;  // 50 milliseconds for debounce
+unsigned long lastDebounceTime = 0;  // Time when the button was last toggled
+int lastButtonState = HIGH;  // Previous state of the button
+int buttonState = HIGH;  // Current reading from the button pin
+
 // register stuff
 SPIClass mySpi = SPIClass(VSPI);
 AsyncWebServer server(80);
@@ -107,6 +115,7 @@ void setup() {
   Serial.begin( 115200 );
   Serial2.begin(9600, SERIAL_8N1, -1, 17);
   esp_task_wdt_init(15, true);
+  pinMode(4, INPUT_PULLUP);
 
   if (!SPIFFS.begin()) {
     return;
@@ -114,7 +123,7 @@ void setup() {
 
   String showversion = "LVGL v";
   showversion += String('.') + lv_version_major() + "." + lv_version_minor() + "." + lv_version_patch();
-  showversion += " - SOFT v.1.5"; // SOFTWARE VERSION DEFINITION
+  showversion += " - SOFT " + versionnumber; // SOFTWARE VERSION DEFINITION
 
   Wire.begin(SDA_PIN, SCL_PIN);
   pwm.begin();
@@ -226,6 +235,42 @@ void setup() {
 
 void loop()
 {
+  int reading = digitalRead(buttonPin);
+
+  if (reading != lastButtonState) {
+    lastDebounceTime = millis();  // Reset the debouncing timer
+  }
+
+  if ((millis() - lastDebounceTime) > debounceDelay) {
+    if (reading != buttonState) {
+      buttonState = reading;
+
+      if (buttonState == LOW) {
+        Serial.println("Physical Dispense Button Pressed");
+
+        if (alertinprogress) { // Alert dispense (1 tray or more)
+          for (int i = 1; i <= 10; i++) {
+            if (i == 10) {
+              alertinprogress = false;
+            }
+            if (traytriggered[i]) {
+              dispensebatchinprogress = true;
+              currentpixelcolor = index_to_pixel(trayColor[i]);
+              currentcolordispense = trayColor[i];
+              dispensebatch(currentcolordispense);
+              break;
+            }
+            lv_obj_add_state(ui_DispenseBTN, LV_STATE_DISABLED); // Disable the button
+            lv_obj_add_state(ui_TraycfgBTN, LV_STATE_DISABLED); // Disable the button
+          }
+        }
+      }
+    }
+  }
+
+  lastButtonState = reading;  // Save the current state
+
   lv_timer_handler(); /* let the GUI do its work */
   lv_task_handler();
+
 }

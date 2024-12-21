@@ -15,7 +15,7 @@ static void startup_step1_timer(lv_timer_t * timer) { //Startup Step 1 [after 10
 static void startup_step2_timer(lv_timer_t * timer) { //Startup Step 2 (Connecting Wifi)
   WiFi.disconnect(true);  // Disconnect any existing connections
   WiFi.mode(WIFI_STA);    // Set Wi-Fi to station mode
-  WiFi.hostname(newHostname.c_str());
+  WiFi.hostname(HOSTNAME.c_str());
   WiFi.begin(ssidload, passwordload);
   int maxRetries = 10; // Set based on your patience
   while (WiFi.status() != WL_CONNECTED && maxRetries-- > 0) {
@@ -169,8 +169,10 @@ static void startup_step15_timer(lv_timer_t * timer) { //Startup Step 15 (Load M
 
   if (internetstatus) {
     webroute();
+    MDNS.begin(HOSTNAME);
     AsyncElegantOTA.begin(&server);
     server.begin();
+    MDNS.addService("http", "tcp", 80);
     if (BOT_TOKEN != "" && CHAT_ID != "") {
       bot = new UniversalTelegramBot(BOT_TOKEN, secured_client);
     }
@@ -217,11 +219,23 @@ void setupTime() {
   // Wait until time is synchronized
   Serial.println("Synchronizing time");
   struct tm timeinfo;
+  unsigned long startTime = millis();  // Record the start time
+
   while (!getLocalTime(&timeinfo)) {
+    if (millis() - startTime > 30000) {  // Timeout after 30000 milliseconds (30 seconds)
+      Serial.println("Time synchronization timed out.");
+      break;
+    }
     Serial.print(".");
     delay(1000);
   }
-  Serial.println("Time synchronized");
+
+  if (getLocalTime(&timeinfo)) {
+    Serial.println("Time synchronized");
+  } else {
+    Serial.println("Failed to synchronize time. Restarting device.");
+    ESP.restart();
+  }
 
   // You can now use time functions like localtime_r to get current time
   char strftime_buf[64];

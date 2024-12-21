@@ -113,7 +113,7 @@ static void DispenseBTN_event_handler(lv_event_t * e) { // Dispense Button
       for (int i = 1; i <= 10; i++) {
         if (i == 10) {
           alertinprogress = false;
-          lv_obj_add_state(ui_DispenseBTN, LV_STATE_DISABLED); // Disable the button
+          //lv_obj_add_state(ui_DispenseBTN, LV_STATE_DISABLED); // Disable the button
         }
         if (traytriggered[i]) {
           dispensebatchinprogress = true;
@@ -122,6 +122,8 @@ static void DispenseBTN_event_handler(lv_event_t * e) { // Dispense Button
           dispensebatch(currentcolordispense);
           break;
         }
+        lv_obj_add_state(ui_DispenseBTN, LV_STATE_DISABLED); // Disable the button
+        lv_obj_add_state(ui_TraycfgBTN, LV_STATE_DISABLED); // Disable the button
       }
     }
   }
@@ -192,6 +194,11 @@ static void pick_pills_screen_event_handler(lv_event_t * e) {
   if (code == LV_EVENT_CLICKED) {
     solidLED = false;
     showLED(pixels.Color(0, 0, 0));
+    for (int i = 10; i >= 1; i--) {
+      if (traytriggered[i]) {
+        lv_obj_clear_state(ui_DispenseBTN, LV_STATE_DISABLED); // Enable the button
+      }
+    }
     placethings();
   }
 }

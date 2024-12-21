@@ -12,6 +12,10 @@ String getAP() {
   return String(ssidload);
 }
 
+String getVER() {
+  return String(versionnumber);
+}
+
 void notFound(AsyncWebServerRequest *request) {
   request->send(404, "text/plain", "Not found");
 }
@@ -23,6 +27,8 @@ String processor(const String& var) {
     return getAP();
   }  else if (var == "DB") {
     return getDB();
+  }  else if (var == "VER") {
+    return getVER();
   } else if (var == "CLOCKSCRENA") {
     String buttons = "";
     String outputStateValue;
@@ -405,6 +411,11 @@ String processor(const String& var) {
     }
     selectHTML += "</select>";
     return selectHTML;
+  }  else if (var == "MDNSTXT") {
+    String texts = "";
+    String value = String(HOSTNAME);
+    texts += "<input maxlength=\"15\" name=\"mdnstext\" size=\"15\" type=\"text\" value=\"" + value + "\"/>";
+    return texts;
   } else {
     return String("n/a");
   }
@@ -413,6 +424,101 @@ String processor(const String& var) {
 void webroute() {
   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
     request->send(SPIFFS, "/index.html", String(), false, processor);
+  });
+
+  server.on("/dropout", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->hasParam("tray")) {
+      request->send(400, "text/plain", "Param 'tray' is missing.");
+      return;
+    }
+
+    int tray = request->getParam("tray")->value().toInt();
+
+    if (tray < 1 || tray > installedTrays) {
+      request->send(400, "text/plain", "Wrong value for tray.");
+      return;
+    }
+
+    dispense(tray);
+    request->send(200, "text/plain", "1");
+
+  });
+
+  server.on("/dispense", HTTP_GET, [](AsyncWebServerRequest * request) {
+
+    if (!alertinprogress) { // Normal dispense (only one tray)
+      request->send(400, "text/plain", "No alarm in progress. Nothing to dispense.");
+      return;
+    } else { // Alert dispense (1 tray or more)
+      for (int i = 1; i <= 10; i++) {
+        if (i == 10) {
+          alertinprogress = false;
+          //lv_obj_add_state(ui_DispenseBTN, LV_STATE_DISABLED); // Disable the button
+        }
+        if (traytriggered[i]) {
+          dispensebatchinprogress = true;
+          currentpixelcolor = index_to_pixel(trayColor[i]);
+          currentcolordispense = trayColor[i];
+          dispensebatch(currentcolordispense);
+          break;
+        }
+        lv_obj_add_state(ui_DispenseBTN, LV_STATE_DISABLED); // Disable the button
+        lv_obj_add_state(ui_TraycfgBTN, LV_STATE_DISABLED); // Disable the button
+      }
+      request->send(200, "text/plain", "1");
+    }
+  });
+
+  server.on("/fix", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->hasParam("tray")) {
+      request->send(400, "text/plain", "Param 'tray' is missing.");
+      return;
+    }
+
+    int tray = request->getParam("tray")->value().toInt();
+
+    if (tray < 1 || tray > installedTrays) {
+      request->send(400, "text/plain", "Wrong value for tray.");
+      return;
+    }
+
+    fixaligment = true;
+    traytodispense = tray;
+    lv_timer_t* timer = lv_timer_create(dispense_step1_timer, 250, NULL);
+
+    request->send(200, "text/plain", "1");
+
+  });
+
+  server.on("/alarm", HTTP_GET, [](AsyncWebServerRequest * request) {
+
+    int alarmId = 2;
+    if (request->hasParam("id")) {
+      alarmId = request->getParam("id")->value().toInt();
+    }
+
+    Playsound(alarmId); // Play the alarm sound
+    lv_timer_reset(alertsound_timer); // Reset alert sound timer
+
+    request->send(200, "text/plain", "1");
+  });
+
+
+  server.on("/dismiss", HTTP_GET, [](AsyncWebServerRequest * request) {
+    for (int i = 1; i <= 10; i++) {
+      if (i == 10) {
+        alertinprogress = false;
+        lv_obj_add_state(ui_DispenseBTN, LV_STATE_DISABLED); // Disable the button
+      }
+      if (traytriggered[i]) {
+        dispensebatchinprogress = true;
+        dismissinprogress = true;
+        currentpixelcolor = index_to_pixel(trayColor[i]);
+        currentcolordispense = trayColor[i];
+        dispensebatch(currentcolordispense);
+        break;
+      }
+    }
   });
 
   server.on("/test", HTTP_GET, [](AsyncWebServerRequest * request) {
@@ -494,7 +600,11 @@ void webroute() {
     dstEnabled = false;
     clockSS = false;
     muteSound = false;
-
+    if (request->hasParam("mdnstext")) {
+      String valueout = request->getParam("mdnstext")->value();
+      HOSTNAME = valueout;
+      preferences.putString("mdnshostname", HOSTNAME.c_str());
+    }
     if (request->hasParam("trayinst")) {
       String valueout = request->getParam("trayinst")->value();
       installedTrays = valueout.toInt() + 1;
