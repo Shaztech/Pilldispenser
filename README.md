@@ -1,7 +1,7 @@
 # Automatic Pill Dispenser
 
 Complete open source project with cheap and easily available parts (listing below).
-All 3d printable parts are in STL format, Gerber PCB are packed in zip for easy drag-drop in 
+All 3d printable parts are in STL format (go to makerworld for the 3D Models), Gerber PCB are packed in zip for easy drag-drop in 
 your prefered provider (JCLPCB, PCBWay, etc).
 Software are available in pre-compiled (bin files) for the ESP32, or all Arduino files are there so you can 
 edit them. I've included all the library I used. The full LCD interface is in Squareline Studio.
@@ -35,7 +35,7 @@ Please check the user manual for the usage of the device.
 ## Part listing:
 (A## = Printed parts, B# = PCB, B#.# = PCB Parts, P# = Parts purchased, S# = Screws)
 
-### Printed parts (STL Files) [(complete profile in makerworld)](https://makerworld.com/en/models/389626):
+### Printed parts [(complete profile in makerworld)](https://makerworld.com/en/models/389626):
 
 - A1 - Base Bottom [1x] (Printed with supports for the top of the lcd, the usb port and the base of the dispenser opening, 15% infill)
     - There's 2 base version, one with a chute and a door, the other one is with a removable cup
