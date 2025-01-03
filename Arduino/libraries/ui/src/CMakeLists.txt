@@ -6,7 +6,7 @@ SET(SOURCES screens/ui_SplashSCR.c
     screens/ui_PickPillsSCR.c
     screens/ui_BlankSCR.c
     screens/ui_SettingSCR.c
-    screens/ui_Setting2SCR.c
+    screens/ui_LockSCR.c
     ui.c
     components/ui_comp_hook.c
     ui_helpers.c

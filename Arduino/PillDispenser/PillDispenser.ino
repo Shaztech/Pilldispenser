@@ -38,7 +38,7 @@
 #define NUM_LEDS   2  // Number of LEDs in your strip
 
 // declaration
-String versionnumber = "v.1.7";
+String versionnumber = "v.1.8";
 String HOSTNAME;
 lv_timer_t* inactivity_timer = NULL;
 lv_timer_t* alertsound_timer = NULL;
@@ -52,6 +52,9 @@ bool systemloaded = false;
 String trayNames[11] = {"", "", "", "", "", "", "", "", "", "", ""};
 String BOT_TOKEN;
 String CHAT_ID;
+String passcode;
+bool enabledpasscode = false;
+int nextaction = 0;
 int telegramalertinterval;
 bool telegram_alertonce = false;
 bool trayAlertEna[11] = {false, false, false, false, false, false, false, false, false, false, false};
@@ -195,7 +198,9 @@ void setup() {
 
   lv_obj_add_event_cb(ui_ScanWifiBTN, scan_wifi_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_Keyboard, keyboard_wifi_event_handler, LV_EVENT_ALL, NULL);
+  lv_obj_add_event_cb(ui_PassKey, passkey_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_SettingBackBTN, SettingBackBTN_event_handler, LV_EVENT_ALL, NULL);
+  lv_obj_add_event_cb(ui_SettingBTN, SettingBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_WifiClearBTN, WifiClearBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_DispenseBTN, DispenseBTN_event_handler, LV_EVENT_ALL, NULL);
   lv_obj_add_event_cb(ui_TrueDismissBTN, TrueDismissBTN_event_handler, LV_EVENT_ALL, NULL);

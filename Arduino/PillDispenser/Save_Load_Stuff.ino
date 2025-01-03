@@ -57,6 +57,10 @@ void saveSettings() {
   preferences.putString("bot_token", BOT_TOKEN);
   preferences.putString("chat_id", CHAT_ID);
 
+  // save passcode infos
+  preferences.putString("passcode", passcode);
+  preferences.putBool("enabledpasscode", enabledpasscode);
+
   preferences.end(); // Close the Preferences
 }
 
@@ -107,6 +111,10 @@ void loadSettings() {
   // load telegram infos
   BOT_TOKEN = preferences.getString("bot_token", "");
   CHAT_ID = preferences.getString("chat_id", "");
+
+  // load passcode infos
+  passcode = preferences.getString("passcode", "");
+  enabledpasscode = preferences.getBool("enabledpasscode", false);
 
   preferences.end(); // Close the Preferences
 }

@@ -1,0 +1,147 @@
+<html>
+<head>
+	<title>Pill Dispenser Configuration Portal</title>
+</head>
+<body>
+
+<h2 id="countdown">HTML Commands for home integration</h2>
+<p>
+<h3>Actions:</h3>
+<table cellspacing="4" >
+	<tbody>
+		<tr>
+			<td style="text-align: left;"><strong>Address</strong></td>
+			<td style="text-align: left;"><strong>Description</strong></td>
+		</tr>
+		<tr>
+			<td>http://[ip_of_pill_dispenser]/alarm<span style="font-size: 12px;"></span></td>
+			<td>Play the default alarm no 1<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>http://[ip_of_pill_dispenser]/alarm?id=[custom_id] 	<span style="font-size: 12px;"></span></td>
+			<td>Play the alarm "id" <span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>http://[ip_of_pill_dispenser]/dispense<span style="font-size: 12px;"></span></td>
+			<td>Dispense the current tray in alert, does nothing if there's no alarm<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>http://[ip_of_pill_dispenser]/droput?tray=[number_of_tray]<span style="font-size: 12px;"></span></td>
+			<td>Drop the pill in tray "number" (1 to 10)<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>http://[ip_of_pill_dispenser]/dismiss<span style="font-size: 12px;"></span></td>
+			<td>Dismiss current alarm that are in progress<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>http://[ip_of_pill_dispenser]/fix?tray=[number_of_tray]<span style="font-size: 12px;"></span></td>
+			<td>Make half step to fix tray "number" (1 to 10)<span style="font-size: 12px;"></span></td>
+		</tr>
+	</tbody>
+</table>
+</p>
+<p>
+<h3>Information:</h3>
+<table cellspacing="4" >
+	<tbody>
+		<tr>
+			<td style="text-align: left;"><strong>Address</strong></td>
+			<td style="text-align: left;"><strong>Description</strong></td>
+		</tr>
+		<tr>
+			<td>http://[ip_of_pill_dispenser]/tr_name?id=[number_of_tray]<span style="font-size: 12px;"></span></td>
+			<td>Return name of the tray<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>http://[ip_of_pill_dispenser]/tr_color?id=[number_of_tray] 	<span style="font-size: 12px;"></span></td>
+			<td>Return 0 to 7 for assigned color (check color table)<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>http://[ip_of_pill_dispenser]/tr_inst?id=[number_of_tray]<span style="font-size: 12px;"></span></td>
+			<td>Return 1 if tray is installed<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>http://[ip_of_pill_dispenser]/tr_enab?id=[number_of_tray]<span style="font-size: 12px;"></span></td>
+			<td>Return 1 if tray is enabled for daily Alerts<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>http://[ip_of_pill_dispenser]/tr_trig?id=[number_of_tray]<span style="font-size: 12px;"></span></td>
+			<td>Return 1 if tray is triggered (Alert in progress)<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>http://[ip_of_pill_dispenser]/tr_disp?id=[number_of_tray]<span style="font-size: 12px;"></span></td>
+			<td>Return 1 if tray is dispensed for today<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>http://[ip_of_pill_dispenser]/tr_dism?id=[number_of_tray]<span style="font-size: 12px;"></span></td>
+			<td>Return 1 if tray is dismissed for today<span style="font-size: 12px;"></span></td>
+		</tr>
+				<tr>
+			<td>http://[ip_of_pill_dispenser]/tr_time?id=[number_of_tray]<span style="font-size: 12px;"></span></td>
+			<td>Return alarm time for this tray<span style="font-size: 12px;"></span></td>
+		</tr>
+	</tbody>
+</table>
+</p>
+<p>
+<h3>Color Table:</h3>
+<table cellspacing="4" >
+	<tbody>
+		<tr>
+			<td style="text-align: left;"><strong>ID</strong></td>
+			<td style="text-align: left;"><strong>RGB Color</strong></td>
+			<td style="text-align: left;"><strong>Color Name</strong></td>
+		</tr>
+		<tr>
+			<td>0<span style="font-size: 12px;"></span></td>
+			<td>255, 0, 0<span style="font-size: 12px;"></span></td>
+			<td>RED<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>1<span style="font-size: 12px;"></span></td>
+			<td>255, 0, 255<span style="font-size: 12px;"></span></td>
+			<td>MAGENTA<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>2<span style="font-size: 12px;"></span></td>
+			<td>128, 0, 128<span style="font-size: 12px;"></span></td>
+			<td>VIOLET<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>3<span style="font-size: 12px;"></span></td>
+			<td>0, 0, 255<span style="font-size: 12px;"></span></td>
+			<td>BLUE<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>4<span style="font-size: 12px;"></span></td>
+			<td>0, 255, 255<span style="font-size: 12px;"></span></td>
+			<td>CYAN<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>5<span style="font-size: 12px;"></span></td>
+			<td>0, 255, 0<span style="font-size: 12px;"></span></td>
+			<td>GREEN<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>6<span style="font-size: 12px;"></span></td>
+			<td>255, 255, 0<span style="font-size: 12px;"></span></td>
+			<td>YELLOW<span style="font-size: 12px;"></span></td>
+		</tr>
+		<tr>
+			<td>7<span style="font-size: 12px;"></span></td>
+			<td>255, 165, 0<span style="font-size: 12px;"></span></td>
+			<td>ORANGE<span style="font-size: 12px;"></span></td>
+		</tr>
+
+	</tbody>
+</table>
+</p>
+
+
+
+<p><a href="/" target="_self">Return to setting page</a><br /></p>
+
+<hr />
+<p><span style="font-size:11px;">Copyright 2025 &copy; <a href="https://github.com/Shaztech/Pilldispenser" target="_blank">Shaztech.Info</a></span></p>
+</body>
+</html>

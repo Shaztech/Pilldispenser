@@ -416,6 +416,21 @@ String processor(const String& var) {
     String value = String(HOSTNAME);
     texts += "<input maxlength=\"15\" name=\"mdnstext\" size=\"15\" type=\"text\" value=\"" + value + "\"/>";
     return texts;
+  }  else if (var == "PASSENA") {
+    String buttons = "";
+    String outputStateValue;
+    if (enabledpasscode) {
+      outputStateValue = "checked";
+    } else {
+      outputStateValue = "";
+    }
+    buttons += "<label class=\"switch\"><input type=\"checkbox\"  name=\"passcodeEnabled\" id=\"passcodeEnabled\" " + outputStateValue + "><span class=\"slider\"></span></label>";
+    return buttons;
+  } else if (var == "PASSTXT") {
+    String texts = "";
+    String value = String(passcode);
+    texts += "<input maxlength=\"6\" minlength=\"4\" name=\"passcodetext\" size=\"15\" type=\"password\" value=\"" + value + "\"/>";
+    return texts;
   } else {
     return String("n/a");
   }
@@ -424,6 +439,10 @@ String processor(const String& var) {
 void webroute() {
   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
     request->send(SPIFFS, "/index.html", String(), false, processor);
+  });
+
+  server.on("/webcmd.html", HTTP_GET, [](AsyncWebServerRequest * request) {
+    request->send(SPIFFS, "/webcmd.html", String(), false, processor);
   });
 
   server.on("/dropout", HTTP_GET, [](AsyncWebServerRequest * request) {
@@ -440,7 +459,7 @@ void webroute() {
     }
 
     dispense(tray);
-    request->send(200, "text/plain", "1");
+    request->send(200, "text/plain", "Done");
 
   });
 
@@ -465,7 +484,7 @@ void webroute() {
         lv_obj_add_state(ui_DispenseBTN, LV_STATE_DISABLED); // Disable the button
         lv_obj_add_state(ui_TraycfgBTN, LV_STATE_DISABLED); // Disable the button
       }
-      request->send(200, "text/plain", "1");
+      request->send(200, "text/plain", "Done");
     }
   });
 
@@ -486,7 +505,7 @@ void webroute() {
     traytodispense = tray;
     lv_timer_t* timer = lv_timer_create(dispense_step1_timer, 250, NULL);
 
-    request->send(200, "text/plain", "1");
+    request->send(200, "text/plain", "Done");
 
   });
 
@@ -500,7 +519,7 @@ void webroute() {
     Playsound(alarmId); // Play the alarm sound
     lv_timer_reset(alertsound_timer); // Reset alert sound timer
 
-    request->send(200, "text/plain", "1");
+    request->send(200, "text/plain", "Done");
   });
 
 
@@ -600,6 +619,16 @@ void webroute() {
     dstEnabled = false;
     clockSS = false;
     muteSound = false;
+    enabledpasscode = false;
+
+    if (request->hasParam("passcodetext")) {
+      String valueout = request->getParam("passcodetext")->value();
+      passcode = valueout;
+      preferences.putString("passcode", passcode.c_str());
+    }
+    if (request->hasParam("passcodeEnabled")) enabledpasscode = true;
+    preferences.putBool("enabledpasscode", enabledpasscode);
+
     if (request->hasParam("mdnstext")) {
       String valueout = request->getParam("mdnstext")->value();
       HOSTNAME = valueout;
@@ -686,5 +715,142 @@ void webroute() {
 
     request->send(SPIFFS, "/saved.html", String(), false, processor);
     lv_timer_t* timer = lv_timer_create(reboot_timer, 1000, NULL);
+  });
+
+  ////----------------------------------------------------------------Home Integration informations
+
+  server.on("/tr_name", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->hasParam("id")) {
+      request->send(400, "text/plain", "Param 'id' is missing.");
+      return;
+    }
+
+    int tray = request->getParam("id")->value().toInt();
+
+    if (tray < 1 || tray > installedTrays) {
+      request->send(400, "text/plain", "Wrong value for tray or tray not installed.");
+      return;
+    }
+
+    request->send(200, "text/plain", trayNames[tray].c_str());
+  });
+
+  server.on("/tr_color", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->hasParam("id")) {
+      request->send(400, "text/plain", "Param 'id' is missing.");
+      return;
+    }
+
+    int tray = request->getParam("id")->value().toInt();
+
+    if (tray < 1 || tray > installedTrays) {
+      request->send(400, "text/plain", "Wrong value for tray or tray not installed.");
+      return;
+    }
+
+    request->send(200, "text/plain", String(trayColor[tray]));
+  });
+
+  server.on("/tr_inst", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->hasParam("id")) {
+      request->send(400, "text/plain", "Param 'id' is missing.");
+      return;
+    }
+
+    int tray = request->getParam("id")->value().toInt();
+
+    if (tray < 1 || tray > installedTrays) {
+      request->send(400, "text/plain", "Wrong value for tray or tray not installed.");
+      return;
+    }
+
+    request->send(200, "text/plain", String(trayEnabled[tray]));
+  });
+
+  server.on("/tr_enab", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->hasParam("id")) {
+      request->send(400, "text/plain", "Param 'id' is missing.");
+      return;
+    }
+
+    int tray = request->getParam("id")->value().toInt();
+
+    if (tray < 1 || tray > installedTrays) {
+      request->send(400, "text/plain", "Wrong value for tray or tray not installed.");
+      return;
+    }
+
+    request->send(200, "text/plain", String(trayAlertEna[tray]));
+  });
+
+  server.on("/tr_trig", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->hasParam("id")) {
+      request->send(400, "text/plain", "Param 'id' is missing.");
+      return;
+    }
+
+    int tray = request->getParam("id")->value().toInt();
+
+    if (tray < 1 || tray > installedTrays) {
+      request->send(400, "text/plain", "Wrong value for tray or tray not installed.");
+      return;
+    }
+
+    request->send(200, "text/plain", String(traytriggered[tray]));
+  });
+
+  server.on("/tr_disp", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->hasParam("id")) {
+      request->send(400, "text/plain", "Param 'id' is missing.");
+      return;
+    }
+
+    int tray = request->getParam("id")->value().toInt();
+
+    if (tray < 1 || tray > installedTrays) {
+      request->send(400, "text/plain", "Wrong value for tray or tray not installed.");
+      return;
+    }
+
+    request->send(200, "text/plain", String(traydisptoday[tray]));
+  });
+
+  server.on("/tr_dism", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->hasParam("id")) {
+      request->send(400, "text/plain", "Param 'id' is missing.");
+      return;
+    }
+
+    int tray = request->getParam("id")->value().toInt();
+
+    if (tray < 1 || tray > installedTrays) {
+      request->send(400, "text/plain", "Wrong value for tray or tray not installed.");
+      return;
+    }
+
+    request->send(200, "text/plain", String(traydismtoday[tray]));
+  });
+
+  server.on("/tr_time", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->hasParam("id")) {
+      request->send(400, "text/plain", "Param 'id' is missing.");
+      return;
+    }
+
+    int tray = request->getParam("id")->value().toInt();
+
+    if (tray < 1 || tray > installedTrays) {
+      request->send(400, "text/plain", "Wrong value for tray or tray not installed.");
+      return;
+    }
+
+    if (!trayAlertEna[tray]) {
+      request->send(400, "text/plain", "This tray is not enabled for daily alerts");
+      return;
+    } else {
+      String timeString = String(trayHours[tray]) + ":" + String(trayMin[tray]);
+      request->send(200, "text/plain", timeString);
+      return;
+    }
   });
 }

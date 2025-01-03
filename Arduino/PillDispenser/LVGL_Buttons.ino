@@ -89,42 +89,50 @@ static void DoubleDispenseCancelBTN_event_handler(lv_event_t * e) { // Double Di
     }
   }
 }
+void Dispense_Action() {
+  if (!alertinprogress) { // Normal dispense (only one tray)
+    for (int i = 1; i <= 10; i++) {
+      if (trayCheckedState[i]) {
+        if (traydisptoday[i]) {
+          lv_obj_clear_flag(ui_DoubletakePAN, LV_OBJ_FLAG_HIDDEN);
+          break;
+        } else {
+          currentpixelcolor = index_to_pixel(trayColor[i]);
+          dispense(i);
+          trayCheckedState[i] = false;
+          lv_obj_clear_state(ui_TrayIMG[i], LV_STATE_CHECKED);
+        }
+      }
+      lv_obj_add_state(ui_DispenseBTN, LV_STATE_DISABLED); // Disable the button
+      lv_obj_add_state(ui_TraycfgBTN, LV_STATE_DISABLED); // Disable the button
+    }
+  } else { // Alert dispense (1 tray or more)
+    for (int i = 1; i <= 10; i++) {
+      if (i == 10) {
+        alertinprogress = false;
+        //lv_obj_add_state(ui_DispenseBTN, LV_STATE_DISABLED); // Disable the button
+      }
+      if (traytriggered[i]) {
+        dispensebatchinprogress = true;
+        currentpixelcolor = index_to_pixel(trayColor[i]);
+        currentcolordispense = trayColor[i];
+        dispensebatch(currentcolordispense);
+        break;
+      }
+      lv_obj_add_state(ui_DispenseBTN, LV_STATE_DISABLED); // Disable the button
+      lv_obj_add_state(ui_TraycfgBTN, LV_STATE_DISABLED); // Disable the button
+    }
+  }
+}
 
 static void DispenseBTN_event_handler(lv_event_t * e) { // Dispense Button
   lv_event_code_t code = lv_event_get_code(e);
   if (code == LV_EVENT_CLICKED) {
-    if (!alertinprogress) { // Normal dispense (only one tray)
-      for (int i = 1; i <= 10; i++) {
-        if (trayCheckedState[i]) {
-          if (traydisptoday[i]) {
-            lv_obj_clear_flag(ui_DoubletakePAN, LV_OBJ_FLAG_HIDDEN);
-            break;
-          } else {
-            currentpixelcolor = index_to_pixel(trayColor[i]);
-            dispense(i);
-            trayCheckedState[i] = false;
-            lv_obj_clear_state(ui_TrayIMG[i], LV_STATE_CHECKED);
-          }
-        }
-        lv_obj_add_state(ui_DispenseBTN, LV_STATE_DISABLED); // Disable the button
-        lv_obj_add_state(ui_TraycfgBTN, LV_STATE_DISABLED); // Disable the button
-      }
-    } else { // Alert dispense (1 tray or more)
-      for (int i = 1; i <= 10; i++) {
-        if (i == 10) {
-          alertinprogress = false;
-          //lv_obj_add_state(ui_DispenseBTN, LV_STATE_DISABLED); // Disable the button
-        }
-        if (traytriggered[i]) {
-          dispensebatchinprogress = true;
-          currentpixelcolor = index_to_pixel(trayColor[i]);
-          currentcolordispense = trayColor[i];
-          dispensebatch(currentcolordispense);
-          break;
-        }
-        lv_obj_add_state(ui_DispenseBTN, LV_STATE_DISABLED); // Disable the button
-        lv_obj_add_state(ui_TraycfgBTN, LV_STATE_DISABLED); // Disable the button
-      }
+    if (!enabledpasscode) {
+      Dispense_Action();
+    } else {
+      nextaction = 1;
+      lv_scr_load(ui_LockSCR);
     }
   }
 }
@@ -140,6 +148,18 @@ static void UpIMGBTN_event_handler(lv_event_t * e) { // Up Arrow Button
       }
       lv_obj_add_state(ui_DispenseBTN, LV_STATE_DISABLED); // Disable the button
       lv_obj_add_state(ui_TraycfgBTN, LV_STATE_DISABLED); // Disable the button
+    }
+  }
+}
+
+static void SettingBTN_event_handler(lv_event_t * e) { // Setting Button
+  lv_event_code_t code = lv_event_get_code(e);
+  if (code == LV_EVENT_CLICKED) {
+    if (!enabledpasscode) {
+      lv_scr_load(ui_SettingSCR);
+    } else {
+      nextaction = 3;
+      lv_scr_load(ui_LockSCR);
     }
   }
 }
@@ -165,7 +185,13 @@ static void TraycfgBTN_event_handler(lv_event_t * e) { // Tray config Button
     for (int i = 1; i <= 10; i++) {
       if (trayCheckedState[i]) selectedtray = i;
     }
-    loadTraySettings(selectedtray);
+    if (!enabledpasscode) {
+      loadTraySettings(selectedtray);
+      lv_scr_load(ui_TrayConfigSCR);
+    } else {
+      nextaction = 2;
+      lv_scr_load(ui_LockSCR);
+    }
   }
 }
 
