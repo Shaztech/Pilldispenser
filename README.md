@@ -139,7 +139,40 @@ esptool.exe --chip esp32 --port COM4 --baud 921600 --before default_reset --afte
 ### In the future if there's an update:
 Use the OTA update page in the web portal of the device, only 2 bin files are needed (esp32 and spiff)
 
+## Buying parts kit (and assembled electronic):
+[jsondag](https://github.com/jsondag) is selling kits, you can email him at: 09-snakes.timbres@icloud.com for more informations.
+
+Here is his list of price as of 2025-01-04
+<p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 13.8px"><span style="font-family: 'Helvetica'; font-weight: normal; font-style: normal; font-size: 12.00px"></span><br></p>
+
+Description | Quantity | Unit Price | Cost
+-- | -- | -- | --
+Main PCB, with components, smd assembly, loose pin header | 1 | $16.00 | $16.00
+USB socket | 1 | $2.00 | $2.00
+LED PCB, with components, smd assembly, loose pin header | 1 | $10.00 | $10.00
+Tray PCB, with loose pin headers, straight through. | 10 | $1.00 | $10.00
+ESP32 2.8” CYD display dev board. | 1 | $14.00 | $14.00
+30mm 2W 8ohm Speaker | 1 | $2.00 | $2.00
+DFPlayer mini | 1 | $3.00 | $3.00
+Servo  SG90 (buy 1 per tray) | 10 | $2.50 | $25.00
+P-Touch Number labels, White on Clear (buy 1 per tray) | 10 | $1.00 | $10.00
+3mm OD left hand torsion spring (buy 1 per tray) | 10 | $1.50 | $15.00
+Ballpoint pen springs x3 (buy 1 per tray) | 10 | $0.50 | $5.00
+Tray Screws #2x5/16” (X10) #4x1/2” (x6). (buy 1 per tray) | 10 | $1.50 | $15.00
+Base Screws #2x5/16” (X8) #4x1/2” (x8) | 1 | $1.50 | $1.50
+Tig Rod (hinges) | 1 | $1.00 | $1.00
+128MB micro SD card | 1 | $3.00 | $3.00
+  |   |   |  
+  |   |   |  
+  |   |   |  
+  |   | Subtotal | $132.50
+  |   | US Shipping | $8.00
+  |   | Total | $140.50
+<p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 13.8px"><span style="font-family: 'Helvetica'; font-weight: normal; font-style: normal; font-size: 12.00px"></span><br></p>
+<br class="Apple-interchange-newline">
+
 ## [Buy me a coffee](https://www.buymeacoffee.com/shaztech_info).
+
 
 
 
