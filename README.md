@@ -47,10 +47,10 @@ Please check the user manual for the usage of the device.
 - A5 - Lock Clip [1x Base + 1x per Tray]
 - A6 - Base Dispense Door (for the A1 base only) [1x]
 - A7 - Tray Base [1x per Tray]
-- A8 - Finger [1x per Tray]
-- A9 - Arm Cap [1x per Tray]
-- A10 - Arm Lock [1x per Tray]
-- A11 - Arm [1x per Tray]
+- **A8 - Finger [1x per Tray]
+- **A9 - Arm Cap [1x per Tray]
+- **A10 - Arm Lock [1x per Tray]
+- **A11 - Arm [1x per Tray]
 - A12 - SG90 Cam [1x per Tray]
 - A13 - CW Rotation Lock [1x per Tray]
 - A14 - Tray Top [1x per Tray]
@@ -88,12 +88,14 @@ Please check the user manual for the usage of the device.
 - P7 - Ø12mm rubber or foam pads [5x]
 - P8 - SG90 Servo 180° PWM Analog (Blue type is fine) [1x per tray]
 - P9 - Ball pen springs (0.4x4.5x18mm) [3x per tray]
-- P10 - Ø1.5mm x 14mm rod (I used Aluminium TIG rod, you can use anything that fit) [1x per tray]
-- P11 - Ø1.5mm x 12mm rod (I used Aluminium TIG rod, you can use anything that fit) [1x per tray]
-- P12 - Torsion Spring - McMaster #9271K71 [1x per tray]
+- **P10 - Ø1.5mm x 14mm rod (I used Aluminium TIG rod, you can use anything that fit) [1x per tray]
+- **P11 - Ø1.5mm x 12mm rod (I used Aluminium TIG rod, you can use anything that fit) [1x per tray]
+- **P12 - Torsion Spring - McMaster #9271K71 [1x per tray]
 - P-Touch Label 12mm
-- S1 - Torx Screws #2 x 3/8" - McMaster #99512A159 [8x Base, 10x per tray]
+- S1 - Torx Screws #2 x 3/8" - McMaster #99512A159 [8x Base, 10x (**8x) per tray]
 - S2 - Torx Screws #4 x 1/2" - McMaster #99512A219 [8x Base, 6x per tray]
+
+**: These are not needed if you use the Arm V2
 
 ## Assembly/Notes:
 
@@ -113,6 +115,10 @@ Before you install the A12 Cam to the servo, connect the PCB with the servo into
 The servo will self align to the resting position and install the cam like in the picture.
 
 ![Alt text](/Pictures/TrayMechanism.jpg?raw=true "Title")
+
+Arm V2:
+
+![Alt text](/Pictures/ArmV2.png?raw=true "Title")
 
 ### Note #4:
 There's a notch and a line printed in the rotating tray (A15), so you can align 
