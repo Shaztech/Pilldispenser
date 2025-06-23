@@ -157,7 +157,24 @@ static void startup_step14_timer(lv_timer_t * timer) { //Startup Step 14 (Wait 5
 static void startup_step15_timer(lv_timer_t * timer) { //Startup Step 15 (Load Main Screen)
   detachServo(9);
   inactivity_timer = lv_timer_create(timeout_action, 120000, NULL); // Create 120 sec timer for screen inactivity
-  alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000, NULL); // Create 60 sec timer for alarm sound repeat
+  //alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000, NULL); // Create 60 sec timer for alarm sound repeat
+  switch (alertinterval) {
+    case 0: alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000 * 1, NULL); break;
+    case 1: alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000 * 2, NULL); break;
+    case 2: alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000 * 3, NULL); break;
+    case 3: alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000 * 4, NULL); break;
+    case 4: alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000 * 5, NULL); break;
+    case 5: alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000 * 6, NULL); break;
+    case 6: alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000 * 7, NULL); break;
+    case 7: alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000 * 8, NULL); break;
+    case 8: alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000 * 9, NULL); break;
+    case 9: alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000 * 10, NULL); break;
+    case 10: alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000 * 15, NULL); break;
+    case 11: alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000 * 20, NULL); break;
+    case 12: alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000 * 25, NULL); break;
+    case 13: alertsound_timer = lv_timer_create(DFPlayer_Alarm_Timer, 60000 * 30, NULL); break;
+  }
+
   lv_scr_load(ui_MainSCR);
 
   for (int i = 1; i <= 10; i++) {

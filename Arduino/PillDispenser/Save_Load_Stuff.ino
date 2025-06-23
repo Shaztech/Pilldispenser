@@ -41,6 +41,9 @@ void saveSettings() {
   // Save volume slider value (int)
   spkvolume = lv_slider_get_value(ui_VolSlider);
   preferences.putInt("spkvolume", spkvolume);
+  
+  // Save alert intervals
+  preferences.putInt("alertinterval", alertinterval);
 
   // Save reset hour
   preferences.putInt("resethours", lv_dropdown_get_selected(ui_DayHourDROP));
@@ -104,6 +107,9 @@ void loadSettings() {
 
   // load telegram timer interval
   telegramalertinterval = preferences.getInt("telinterv", 0);
+
+  // Save alert intervals
+  alertinterval = preferences.getInt("alertinterval", 0);
 
   // load default hostname
   HOSTNAME = preferences.getString("mdnshostname", "pilldisp");

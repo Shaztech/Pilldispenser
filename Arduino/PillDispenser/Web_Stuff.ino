@@ -77,6 +77,15 @@ String processor(const String& var) {
     }
     selectHTML += "</select>";
     return selectHTML;
+  } else if (var == "ALERTINTERVAL") {
+    String value = String(alertinterval - 1);
+    String selectHTML = "<select name=\"alertinterval\" id=\"alertinterval\">";
+    String choices[] = {"1 min", "2 mins", "3 mins", "4 mins", "5 mins", "6 mins", "7 mins", "8 mins", "9 mins", "10 mins", "15 mins", "20 mins", "25 mins", "30 mins"};
+    for (int i = 0; i <= 13; i++) {
+      selectHTML += "<option value=\"" + String(i) + "\"" + (value == String(i) ? " selected" : "") + ">" + choices[i] + "</option>";
+    }
+    selectHTML += "</select>";
+    return selectHTML;
   } else if (var == "TRAYINSTBOX") {
     String value = String(installedTrays - 1);
     String selectHTML = "<select name=\"trayinst\" id=\"trayinst\">";
@@ -648,6 +657,11 @@ void webroute() {
       String valueout = request->getParam("spkvolume")->value();
       spkvolume = valueout.toInt() + 1;
       preferences.putInt("spkvolume", spkvolume);
+    }
+    if (request->hasParam("alertinterval")) {
+      String valueout = request->getParam("alertinterval")->value();
+      alertinterval = valueout.toInt() + 1;
+      preferences.putInt("alertinterval", alertinterval);
     }
     if (request->hasParam("dstEnabled")) dstEnabled = true;
     if (request->hasParam("clockSS")) clockSS = true;

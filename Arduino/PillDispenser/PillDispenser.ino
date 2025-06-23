@@ -38,7 +38,7 @@
 #define NUM_LEDS   2  // Number of LEDs in your strip
 
 // declaration
-String versionnumber = "v.1.8";
+String versionnumber = "v.1.9";
 String HOSTNAME;
 lv_timer_t* inactivity_timer = NULL;
 lv_timer_t* alertsound_timer = NULL;
@@ -94,6 +94,7 @@ int traytodispense;
 int displacesteps;
 int selectedtray;
 int spkvolume;
+int alertinterval;
 
 const int buttonPin = 4;  // GPIO4
 const int debounceDelay = 50;  // 50 milliseconds for debounce
