@@ -69,7 +69,7 @@ Please check the user manual for the usage of the device.
 - B2 - LED WS2812B PCB [1x]
   - B2.1 - WS2812B 5050 LED [1x]
   - B2.2 - SMD Capacitor 0.1uf/6.3V (1206) [1x]
-  - B2.3 - 74AHCT125N (SOIC14) [1x]
+  - B2.3 - 74AHCT125D (SOIC14) [1x]
 - B3 - Tray PCB [1x per tray]
   - There's now 2 version of the board (Straight and shifting). The shifting version (original),
   is for trays that always will be in stacking order (trays 1 at the bottom and 10 at the top).
