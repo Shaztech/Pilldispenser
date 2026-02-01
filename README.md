@@ -27,6 +27,8 @@ Please check the user manual for the usage of the device.
 - Visual indication of remaining pills (P-Touch label 30 to E)
 - Web interface for easy configuration with browser
 - Telegram integration
+- [Home Assistant Integration](https://github.com/demrios-de/Pill-Dispenser-Integration-for-Home-Assistant) [EN/DE] (made by [demrios](https://github.com/demrios-de))
+  
 
 ![Alt text](/Pictures/Screens.png?raw=true "Title")
 ![Alt text](/Pictures/TraywithPills.jpg?raw=true "Title")
