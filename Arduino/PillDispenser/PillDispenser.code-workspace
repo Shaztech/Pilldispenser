@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"name": "PillDispenser",
+			"path": "PillDispenser"
+		},
+		{
+			"name": "PillDispenser",
+			"path": "."
+		}
+	],
+	"settings": {}
+}

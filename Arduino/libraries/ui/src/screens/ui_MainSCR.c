@@ -73,7 +73,7 @@ void ui_MainSCR_screen_init(void)
     ui_ClockLBL = lv_label_create(ui_MainSCR);
     lv_obj_set_width(ui_ClockLBL, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_ClockLBL, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_ClockLBL, 100);
+    lv_obj_set_x(ui_ClockLBL, 92);
     lv_obj_set_y(ui_ClockLBL, -108);
     lv_obj_set_align(ui_ClockLBL, LV_ALIGN_CENTER);
     lv_label_set_text(ui_ClockLBL, "");

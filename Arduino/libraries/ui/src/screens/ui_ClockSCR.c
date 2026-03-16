@@ -23,6 +23,18 @@ void ui_ClockSCR_screen_init(void)
     lv_obj_set_style_text_opa(ui_ClockSCRLBL, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_ClockSCRLBL, &ui_font_Timefont, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    ui_ClockSCRAMPM = lv_label_create(ui_ClockSCR);
+    lv_obj_set_width(ui_ClockSCRAMPM, LV_SIZE_CONTENT);
+    lv_obj_set_height(ui_ClockSCRAMPM, LV_SIZE_CONTENT);
+    lv_obj_set_align(ui_ClockSCRAMPM, LV_ALIGN_CENTER);
+    lv_obj_set_x(ui_ClockSCRAMPM, 115);
+    lv_obj_set_y(ui_ClockSCRAMPM, -16);
+    lv_label_set_text(ui_ClockSCRAMPM, "");
+    lv_obj_set_style_text_color(ui_ClockSCRAMPM, lv_color_hex(0xA4C2EE), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_ClockSCRAMPM, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_ClockSCRAMPM, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_add_flag(ui_ClockSCRAMPM, LV_OBJ_FLAG_HIDDEN);
+
     ui_DateSCRLBL = lv_label_create(ui_ClockSCR);
     lv_obj_set_width(ui_DateSCRLBL, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_DateSCRLBL, LV_SIZE_CONTENT);    /// 1
