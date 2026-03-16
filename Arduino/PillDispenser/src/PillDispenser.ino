@@ -38,7 +38,7 @@
 #define NUM_LEDS   2  // Number of LEDs in your strip
 
 // declaration
-String versionnumber = "v.1.9";
+String versionnumber = "v2.0.0";
 String HOSTNAME;
 lv_timer_t* inactivity_timer = NULL;
 lv_timer_t* alertsound_timer = NULL;
