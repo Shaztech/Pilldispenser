@@ -168,6 +168,7 @@ void ui_ClockSCR_screen_init(void);
 void ui_event_ClockSCR(lv_event_t * e);
 extern lv_obj_t * ui_ClockSCR;
 extern lv_obj_t * ui_ClockSCRLBL;
+extern lv_obj_t * ui_ClockSCRAMPM;
 extern lv_obj_t * ui_DateSCRLBL;
 // SCREEN: ui_PickPillsSCR
 void ui_PickPillsSCR_screen_init(void);
@@ -192,6 +193,7 @@ extern lv_obj_t * ui_VolSlider;
 extern lv_obj_t * ui_UTCLBL;
 extern lv_obj_t * ui_VolLBL;
 extern lv_obj_t * ui_MuteCHK;
+extern lv_obj_t * ui_Clock12hrCHK;
 extern lv_obj_t * ui_DSTCHK;
 extern lv_obj_t * ui_SettingBackBTN;
 extern lv_obj_t * ui_SettingBackBTNLBL;

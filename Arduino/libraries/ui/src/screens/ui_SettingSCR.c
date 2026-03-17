@@ -114,6 +114,19 @@ void ui_SettingSCR_screen_init(void)
     lv_obj_set_style_bg_color(ui_MuteCHK, lv_color_hex(0x3175DE), LV_PART_INDICATOR | LV_STATE_CHECKED);
     lv_obj_set_style_bg_opa(ui_MuteCHK, 255, LV_PART_INDICATOR | LV_STATE_CHECKED);
 
+    ui_Clock12hrCHK = lv_checkbox_create(ui_SettingSCR);
+    lv_checkbox_set_text(ui_Clock12hrCHK, "12Hr");
+    lv_obj_set_width(ui_Clock12hrCHK, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Clock12hrCHK, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Clock12hrCHK, 80);
+    lv_obj_set_y(ui_Clock12hrCHK, 181);
+    lv_obj_add_flag(ui_Clock12hrCHK, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+
+    lv_obj_set_style_border_color(ui_Clock12hrCHK, lv_color_hex(0x3175DE), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_Clock12hrCHK, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_Clock12hrCHK, lv_color_hex(0x3175DE), LV_PART_INDICATOR | LV_STATE_CHECKED);
+    lv_obj_set_style_bg_opa(ui_Clock12hrCHK, 255, LV_PART_INDICATOR | LV_STATE_CHECKED);
+
     ui_DSTCHK = lv_checkbox_create(ui_SettingSCR);
     lv_checkbox_set_text(ui_DSTCHK, "DST");
     lv_obj_set_width(ui_DSTCHK, LV_SIZE_CONTENT);   /// 1
@@ -169,10 +182,10 @@ void ui_SettingSCR_screen_init(void)
     lv_label_set_text(ui_InstalledTrayLBL, "Trays\ninstalled");
 
     ui_ScreensaverCHK1 = lv_checkbox_create(ui_SettingSCR);
-    lv_checkbox_set_text(ui_ScreensaverCHK1, "Time/Date as Screensaver");
+    lv_checkbox_set_text(ui_ScreensaverCHK1, "Enable Screensaver");
     lv_obj_set_width(ui_ScreensaverCHK1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_ScreensaverCHK1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_ScreensaverCHK1, 90);
+    lv_obj_set_x(ui_ScreensaverCHK1, 145);
     lv_obj_set_y(ui_ScreensaverCHK1, 181);
     lv_obj_add_flag(ui_ScreensaverCHK1, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
 

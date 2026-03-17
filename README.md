@@ -27,6 +27,8 @@ Please check the user manual for the usage of the device.
 - Visual indication of remaining pills (P-Touch label 30 to E)
 - Web interface for easy configuration with browser
 - Telegram integration
+- **Discord webhook integration** *(new in v2.0.0)*
+- **12-hour clock support** with AM/PM *(new in v2.0.0)*
 - [Home Assistant Integration](https://github.com/demrios-de/Pill-Dispenser-Integration-for-Home-Assistant) [EN/DE] (made by [demrios](https://github.com/demrios-de))
   
 
@@ -145,6 +147,60 @@ esptool.exe --chip esp32 --port COM4 --baud 921600 --before default_reset --afte
 
 ### In the future if there's an update:
 Use the OTA update page in the web portal of the device, only 2 bin files are needed (esp32 and spiff)
+
+## Building with PlatformIO (for developers):
+
+If you want to build from source and make modifications, this fork includes a full [PlatformIO](https://platformio.org/) project:
+
+### Prerequisites
+- [PlatformIO CLI](https://docs.platformio.org/en/latest/core/installation/index.html) or [VS Code PlatformIO extension](https://platformio.org/install/ide?install=vscode)
+- ESP32 Dev Module (CYD — Cheap Yellow Display)
+- USB cable connected to the ESP32
+
+### Build & Upload
+```bash
+# Clone the repo and switch to the enhancements branch
+git clone https://github.com/dgshue/Pilldispenser.git
+cd Pilldispenser
+git checkout enhancements
+
+# Navigate to the PlatformIO project
+cd Arduino/PillDispenser
+
+# Update platformio.ini with your COM port (default: COM14)
+# Then build and upload firmware
+pio run --target upload
+
+# Upload the web portal files (SPIFFS)
+pio run --target uploadfs
+
+# Monitor serial output (115200 baud)
+pio device monitor
+```
+
+### Project Layout
+```
+Arduino/PillDispenser/
+  platformio.ini         - Build config, dependencies, board settings
+  src/                   - All .ino source files
+  data/                  - SPIFFS web files (index.html, saved.html, etc.)
+Arduino/libraries/
+  TFT_eSPI/              - Local copy with custom User_Setup.h (pin config)
+  ui/                    - SquareLine Studio generated LVGL UI library
+  lv_conf.h              - LVGL configuration
+```
+
+### Key Notes
+- Libraries are managed by PlatformIO (`lib_deps` in platformio.ini) except `TFT_eSPI` and `ui` which are local
+- `lib_extra_dirs = ../libraries` pulls in the local libraries automatically
+- The `data/` directory at the project root is what PlatformIO uploads to SPIFFS (not `src/data/`)
+- Partition scheme is `min_spiffs.csv` — flash space is limited (~87% used)
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for detailed release notes.
+
+**Current version: v2.0.0** — Discord integration, 12hr clock, web crash fix, custom OTA, dependency overhaul
 
 ## Buying parts kit (and assembled electronic):
 [jsondag](https://github.com/jsondag) is selling kits, you can email him at: 09-snakes.timbres@icloud.com for more informations.

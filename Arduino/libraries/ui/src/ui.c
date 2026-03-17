@@ -160,6 +160,7 @@ void ui_ClockSCR_screen_init(void);
 void ui_event_ClockSCR(lv_event_t * e);
 lv_obj_t * ui_ClockSCR;
 lv_obj_t * ui_ClockSCRLBL;
+lv_obj_t * ui_ClockSCRAMPM;
 lv_obj_t * ui_DateSCRLBL;
 
 
@@ -190,6 +191,7 @@ lv_obj_t * ui_VolSlider;
 lv_obj_t * ui_UTCLBL;
 lv_obj_t * ui_VolLBL;
 lv_obj_t * ui_MuteCHK;
+lv_obj_t * ui_Clock12hrCHK;
 lv_obj_t * ui_DSTCHK;
 lv_obj_t * ui_SettingBackBTN;
 lv_obj_t * ui_SettingBackBTNLBL;
