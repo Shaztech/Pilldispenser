@@ -21,6 +21,10 @@
 #include <UniversalTelegramBot.h>
 #include <ArduinoJson.h>
 #include "esp_task_wdt.h"
+#include <HTTPClient.h>
+#include <HTTPUpdate.h>
+
+
 
 #define XPT2046_IRQ 36
 #define XPT2046_MOSI 32
@@ -39,6 +43,12 @@
 
 // declaration
 String versionnumber = "v.1.9";
+bool trayPaused[11] = {false, false, false, false, false, false, false, false, false, false, false};
+String haWebhookUrl = "";
+String pendingWebhookEvent = "";
+int pendingWebhookTray = 0;
+bool triggerGithubOta = false;
+
 String HOSTNAME;
 lv_timer_t* inactivity_timer = NULL;
 lv_timer_t* alertsound_timer = NULL;
@@ -278,5 +288,10 @@ void loop()
 
   lv_timer_handler(); /* let the GUI do its work */
   lv_task_handler();
+
+  if (triggerGithubOta) {
+    triggerGithubOta = false;
+    performGithubOtaUpdate();
+  }
 
 }

@@ -37,6 +37,23 @@
 			<td>http://[ip_of_pill_dispenser]/fix?tray=[number_of_tray]<span style="font-size: 12px;"></span></td>
 			<td>Make half step to fix tray "number" (1 to 10)<span style="font-size: 12px;"></span></td>
 		</tr>
+		<tr>
+          <td>http://[ip_of_pill_dispenser]/tray_pause?tray=[number]&amp;paused=[0|1]</td>
+          <td>Pause (1) or resume (0) scheduled alerts for tray "number" (1 to 10)</td>
+        </tr>
+        <tr>
+          <td>http://[ip_of_pill_dispenser]/displace?tray=[number]&amp;steps=[1-30]</td>
+          <td>Advance tray "number" (1 to 10) by "steps" (1 to 30)</td>
+        </tr>
+        <tr>
+          <td>POST http://[ip_of_pill_dispenser]/api/ha_webhook?url=[webhook_url]</td>
+          <td>Register a Home Assistant webhook URL for instant push events</td>
+        </tr>
+        <tr>
+          <td>POST http://[ip_of_pill_dispenser]/api/ota_github</td>
+          <td>Trigger direct OTA firmware &amp; SPIFFS update from latest GitHub release</td>
+        </tr>
+
 	</tbody>
 </table>
 </p>
@@ -80,6 +97,15 @@
 			<td>http://[ip_of_pill_dispenser]/tr_time?id=[number_of_tray]<span style="font-size: 12px;"></span></td>
 			<td>Return alarm time for this tray<span style="font-size: 12px;"></span></td>
 		</tr>
+		<tr>
+          <td>http://[ip_of_pill_dispenser]/api/status</td>
+          <td>Return complete system and tray status as JSON</td>
+        </tr>
+        <tr>
+          <td>http://[ip_of_pill_dispenser]/api/update_check</td>
+          <td>Check if a newer firmware release is available on GitHub</td>
+        </tr>
+
 	</tbody>
 </table>
 </p>
