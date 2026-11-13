@@ -21,6 +21,8 @@ void dispense(int whichtray) {
         snprintf(key, sizeof(key), "traydismtoday%d", whichtray);
         preferences.putBool(key, traydismtoday[whichtray]);
         preferences.end(); // Close the Preferences
+        notifyHomeAssistant("pill_dispensed", whichtray);
+
       }
     }
   } else {
@@ -38,6 +40,8 @@ void dispense(int whichtray) {
       snprintf(key, sizeof(key), "traydismtoday%d", whichtray);
       preferences.putBool(key, traydismtoday[whichtray]);
       preferences.end(); // Close the Preferences
+      notifyHomeAssistant("alert_dismissed", whichtray);
+
     }
   }
 }
@@ -92,6 +96,8 @@ static void dispense_step5_timer(lv_timer_t * timer) {  //Dispense Step 5
       displacementinprogress = false;
       lv_dropdown_set_selected(ui_DisplaceTrayDROP, 0);
       lv_obj_add_flag(ui_InprogressPAN, LV_OBJ_FLAG_HIDDEN);
+      notifyHomeAssistant("displace_done", traytodispense);
+
     }
   } else {
     trayfastflash[traytodispense] = false;

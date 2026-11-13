@@ -121,6 +121,8 @@ void loadSettings() {
   // load passcode infos
   passcode = preferences.getString("passcode", "");
   enabledpasscode = preferences.getBool("enabledpasscode", false);
+  // load Home Assistant webhook URL
+  haWebhookUrl = preferences.getString("ha_webhook", "");
 
   preferences.end(); // Close the Preferences
 }
@@ -162,6 +164,10 @@ void clearTrayPreferences(int trayIndex) {
 
   snprintf(key, sizeof(key), "traydismtoday%d", trayIndex);
   preferences.remove(key);
+
+  snprintf(key, sizeof(key), "trayPaused%d", trayIndex);
+  preferences.remove(key);
+
 
   preferences.end(); // Close the Preferences
 }
@@ -253,6 +259,11 @@ void loadTraySettings(int trayIndex) {
   lv_roller_set_selected(ui_ColorRoller, colorIndex, LV_ANIM_OFF);
   trayColor[trayIndex] = colorIndex;
   lv_obj_set_style_bg_color(ui_ColorPanel, index_to_color(colorIndex), LV_PART_MAIN);
+
+  // Load tray pause / holiday mode status
+  snprintf(key, sizeof(key), "trayPaused%d", trayIndex);
+  trayPaused[trayIndex] = preferences.getBool(key, false);
+
 
   preferences.end(); // Close the Preferences
 }

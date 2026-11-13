@@ -188,7 +188,38 @@ Current AP: <strong> %AP%</strong><br />
 Signal Level: <strong> %DB% dbm</strong><br />
 Current Firmware Ver.: <strong> %VER%</strong><br />
 Current SPIFF Ver.: <strong> v.1.8</strong><br />
-OTA Update: <a href="/update" target="_blank">Update Page</a><br/>
+<p>OTA Update: <a href="/update">Update Page</a></p>
+<p>GitHub OTA:
+  <button type="button" onclick="checkGithubOta()">Check for Update</button>
+  <span id="otaStatus"></span>
+</p>
+
+
+<script>
+function checkGithubOta() {
+  const status = document.getElementById('otaStatus');
+  status.innerText = ' Checking...';
+  fetch('/api/update_check')
+    .then(r => r.json())
+    .then(data => {
+      if (data.update_available) {
+        status.innerHTML = ' New version <b>' + data.latest_version + '</b> available! ' +
+          '<button type="button" onclick="startGithubOta()">Install Now</button>';
+      } else {
+        status.innerText = ' Up to date (' + data.current_version + ')';
+      }
+    })
+    .catch(() => { status.innerText = ' Check failed.'; });
+}
+
+function startGithubOta() {
+  if (!confirm('Start OTA update from GitHub? The device will reboot automatically.')) return;
+  document.getElementById('otaStatus').innerText = ' Updating... please wait 60 sec.';
+  fetch('/api/ota_github', { method: 'POST' });
+}
+</script>
+
+<br/>
 HTML Commands for home integration: <a href="/webcmd.html">Information Page</a><br/>
 <hr>
 <a href="/reset"><button class="button">Factory reset</button></a>

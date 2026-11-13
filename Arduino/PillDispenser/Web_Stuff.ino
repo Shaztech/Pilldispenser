@@ -445,6 +445,104 @@ String processor(const String& var) {
   }
 }
 
+// Non-blocking Home Assistant Webhook Push
+static void ha_webhook_timer_cb(lv_timer_t * timer) {
+  if (haWebhookUrl.length() > 0 && WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+    http.setTimeout(2000);
+    http.begin(haWebhookUrl);
+    http.addHeader("Content-Type", "application/json");
+
+    StaticJsonDocument<256> doc;
+    doc["event"] = pendingWebhookEvent;
+    doc["tray"] = pendingWebhookTray;
+    doc["alert_in_progress"] = alertinprogress;
+    if (pendingWebhookTray >= 1 && pendingWebhookTray <= 10) {
+      doc["triggered"] = traytriggered[pendingWebhookTray];
+      doc["dispensed_today"] = traydisptoday[pendingWebhookTray];
+      doc["dismissed_today"] = traydismtoday[pendingWebhookTray];
+      doc["paused"] = trayPaused[pendingWebhookTray];
+    }
+
+    String payload;
+    serializeJson(doc, payload);
+    http.POST(payload);
+    http.end();
+  }
+  lv_timer_del(timer);
+}
+
+void notifyHomeAssistant(const String& eventName, int trayNum) {
+  if (haWebhookUrl.length() == 0) return;
+  pendingWebhookEvent = eventName;
+  pendingWebhookTray = trayNum;
+  lv_timer_create(ha_webhook_timer_cb, 150, NULL);
+}
+
+// GitHub Release Check & OTA Update
+String checkLatestGithubRelease(String &fwAssetUrl, String &spiffsAssetUrl) {
+  if (WiFi.status() != WL_CONNECTED) return "";
+  WiFiClientSecure client;
+  client.setInsecure();
+  HTTPClient http;
+  http.setUserAgent("PillDispenser-ESP32");
+  http.setTimeout(5000);
+
+  if (!http.begin(client, "https://api.github.com/repos/Shaztech/Pilldispenser/releases/latest")) {
+    return "";
+  }
+  int code = http.GET();
+  if (code != 200) {
+    http.end();
+    return "";
+  }
+
+  DynamicJsonDocument doc(4096);
+  DeserializationError err = deserializeJson(doc, http.getStream());
+  http.end();
+  if (err) return "";
+
+  String tagName = doc["tag_name"] | "";
+  JsonArray assets = doc["assets"].as<JsonArray>();
+  for (JsonObject asset : assets) {
+    String name = asset["name"] | "";
+    String url = asset["browser_download_url"] | "";
+    String lowerName = name;
+    lowerName.toLowerCase();
+
+    if (lowerName.endsWith(".bin")) {
+      if (lowerName.indexOf("bootloader") >= 0 || lowerName.indexOf("partitions") >= 0 || lowerName.indexOf("inv") >= 0) {
+        continue;
+      }
+      if (lowerName.indexOf("spiffs") >= 0) {
+        spiffsAssetUrl = url;
+      } else {
+        fwAssetUrl = url;
+      }
+    }
+
+  }
+
+  return tagName;
+}
+
+void performGithubOtaUpdate() {
+  String fwUrl = "";
+  String spiffsUrl = "";
+  String latest = checkLatestGithubRelease(fwUrl, spiffsUrl);
+  if (fwUrl == "") return;
+
+  WiFiClientSecure client;
+  client.setInsecure();
+  httpUpdate.setFollowRedirects(HTTPC_STRICT_FOLLOW_REDIRECTS);
+
+  if (spiffsUrl != "") {
+    httpUpdate.updateSpiffs(client, spiffsUrl);
+  }
+  httpUpdate.update(client, fwUrl);
+}
+
+
 void webroute() {
   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
     request->send(SPIFFS, "/index.html", String(), false, processor);
@@ -867,4 +965,143 @@ void webroute() {
       return;
     }
   });
+  ////----------------------------------------------------------------Home Assistant Enhanced API
+
+  // 1. Single-request JSON status endpoint (replaces 80+ individual polling requests)
+  server.on("/api/status", HTTP_GET, [](AsyncWebServerRequest * request) {
+    AsyncResponseStream *response = request->beginResponseStream("application/json");
+    DynamicJsonDocument doc(3072);
+
+    doc["version"] = versionnumber;
+    doc["hostname"] = HOSTNAME;
+    doc["ip"] = getIP();
+    doc["rssi"] = WiFi.RSSI();
+    doc["free_heap"] = ESP.getFreeHeap();
+    doc["uptime_sec"] = millis() / 1000;
+    doc["installed_trays"] = installedTrays;
+    doc["alert_in_progress"] = alertinprogress;
+    doc["displacement_in_progress"] = displacementinprogress;
+    doc["mute_sound"] = muteSound;
+    doc["ha_webhook_configured"] = (haWebhookUrl.length() > 0);
+
+    JsonArray trays = doc.createNestedArray("trays");
+    for (int i = 1; i <= installedTrays; i++) {
+      JsonObject t = trays.createNestedObject();
+      t["id"] = i;
+      t["name"] = trayNames[i];
+      t["color"] = trayColor[i];
+      t["installed"] = trayEnabled[i];
+      t["alert_enabled"] = trayAlertEna[i];
+      t["paused"] = trayPaused[i];
+      t["triggered"] = traytriggered[i];
+      t["dispensed_today"] = traydisptoday[i];
+      t["dismissed_today"] = traydismtoday[i];
+      char timeBuf[6];
+      snprintf(timeBuf, sizeof(timeBuf), "%02d:%02d", trayHours[i], trayMin[i]);
+      t["time"] = String(timeBuf);
+    }
+
+    serializeJson(doc, *response);
+    request->send(response);
+  });
+
+  // 2. Register Home Assistant webhook URL for instant push notifications
+  server.on("/api/ha_webhook", HTTP_POST, [](AsyncWebServerRequest * request) {
+    if (!request->hasParam("url", true) && !request->hasParam("url")) {
+      request->send(400, "text/plain", "Param 'url' is missing.");
+      return;
+    }
+    String newUrl = request->hasParam("url", true) ? request->getParam("url", true)->value() : request->getParam("url")->value();
+    haWebhookUrl = newUrl;
+
+    preferences.begin("appSettings", false);
+    preferences.putString("ha_webhook", haWebhookUrl);
+    preferences.end();
+
+    request->send(200, "application/json", "{\"status\":\"ok\"}");
+  });
+
+  // 3. Holiday / Pause mode per tray
+  server.on("/tray_pause", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->hasParam("tray") || !request->hasParam("paused")) {
+      request->send(400, "text/plain", "Params 'tray' and 'paused' (0 or 1) are required.");
+      return;
+    }
+    int tray = request->getParam("tray")->value().toInt();
+    if (tray < 1 || tray > installedTrays) {
+      request->send(400, "text/plain", "Invalid tray number.");
+      return;
+    }
+    bool paused = (request->getParam("paused")->value().toInt() == 1);
+    trayPaused[tray] = paused;
+
+    char key[20];
+    snprintf(key, sizeof(key), "trayPaused%d", tray);
+    preferences.begin("traySettings", false);
+    preferences.putBool(key, paused);
+    preferences.end();
+
+    notifyHomeAssistant("tray_paused", tray);
+    request->send(200, "text/plain", "Done");
+  });
+
+  // 4. Advance tray by X steps (for refilling / resetting)
+  server.on("/displace", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->hasParam("tray")) {
+      request->send(400, "text/plain", "Param 'tray' is missing.");
+      return;
+    }
+    int tray = request->getParam("tray")->value().toInt();
+    int steps = request->hasParam("steps") ? request->getParam("steps")->value().toInt() : 1;
+
+    if (tray < 1 || tray > installedTrays) {
+      request->send(400, "text/plain", "Invalid tray number.");
+      return;
+    }
+    if (steps < 1 || steps > 30) {
+      request->send(400, "text/plain", "Param 'steps' must be between 1 and 30.");
+      return;
+    }
+    if (alertinprogress || displacementinprogress || dispensebatchinprogress) {
+      request->send(409, "text/plain", "Dispenser is currently busy.");
+      return;
+    }
+
+    displace(tray, steps);
+    request->send(200, "text/plain", "Done");
+  });
+
+  // 5. Check latest GitHub release version
+  server.on("/api/update_check", HTTP_GET, [](AsyncWebServerRequest * request) {
+    String fwUrl = "";
+    String spiffsUrl = "";
+    String latestTag = checkLatestGithubRelease(fwUrl, spiffsUrl);
+
+    StaticJsonDocument<512> doc;
+    doc["current_version"] = versionnumber;
+    doc["latest_version"] = latestTag;
+    String cleanCurrent = versionnumber;
+    cleanCurrent.replace("v.", "v");
+    String cleanLatest = latestTag;
+    cleanLatest.replace("v.", "v");
+
+    doc["update_available"] = (cleanLatest.length() > 0 && cleanLatest != cleanCurrent);
+    doc["firmware_url"] = fwUrl;
+
+
+    String out;
+    serializeJson(doc, out);
+    request->send(200, "application/json", out);
+  });
+
+  // 6. Trigger one-click OTA update from GitHub latest release
+  server.on("/api/ota_github", HTTP_POST, [](AsyncWebServerRequest * request) {
+    if (alertinprogress || displacementinprogress || dispensebatchinprogress) {
+      request->send(409, "text/plain", "Cannot update while dispensing or alert is active.");
+      return;
+    }
+    triggerGithubOta = true;
+    request->send(200, "application/json", "{\"status\":\"updating\"}");
+  });
+
 }

@@ -5,11 +5,12 @@ static void check_trays_timer_cb(lv_timer_t * timer) {
   localtime_r(&now, &timeinfo);
 
   for (int i = 1; i <= 10; i++) {
-    if (trayAlertEna[i] && !alreadyTriggered[i] && trayEnabled[i] && !traydisptoday[i] && !traydismtoday[i]) {
+    if (trayAlertEna[i] && !alreadyTriggered[i] && trayEnabled[i] && !traydisptoday[i] && !traydismtoday[i] && !trayPaused[i]) {
       if (trayHours[i] == timeinfo.tm_hour && trayMin[i] == timeinfo.tm_min) {
         // Trigger the visual alert for this tray
         traytriggered[i] = true;
         alreadyTriggered[i] = true; // Mark as triggered (wait for 2 min)
+        notifyHomeAssistant("alert_triggered", i);
 
         for (int i = 1; i <= 10; i++) { // Clear the checked state for all trays
           trayCheckedState[i] = false;
@@ -63,6 +64,8 @@ static void check_trays_timer_cb(lv_timer_t * timer) {
 
       preferences.end(); // Close the Preferences
       myDFPlayer.reset();
+      notifyHomeAssistant("daily_reset", i);
+
     }
   }
 }
